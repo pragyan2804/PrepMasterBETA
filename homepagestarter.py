@@ -60,11 +60,11 @@ def homepageaction():
         less_display['font'] = less_font
         less_display.place(x=5, y=332, width=80, height=100)
         display = tkinter.Button(root, 
-                            text = 'GO',
+                            text = 'GO!',
                             font='BurbankBigCondensed-Bold 25',
                             bg='#57595c',
                             fg='white',
-                            command = lambda:selectsubject()).place(x=480, y=490, width=320, height=75)
+                            command = lambda:selectsubject()).place(x=480, y=486, width=320, height=75)
 
         display = tk.Button(root,
                             text="<SIGN OUT>",
@@ -72,8 +72,7 @@ def homepageaction():
                             fg="black",
                             bg="#22C53A",
                             borderwidth=0,
-                            command = lambda:signout()
-                            ).place(x=900, y=1.15, width=500, height=50)
+                            command = lambda:signout()).place(x=970, y=1.15, width=300, height=50)
 
 
     def homemcq():
@@ -114,11 +113,11 @@ def homepageaction():
         less_display.place(x=5, y=333, width=80, height=100)
 
         display = tk.Button(root, 
-                            text = 'GO',
+                            text = 'GO!',
                             font='BurbankBigCondensed-Bold 25',
                             bg='#57595c',
                             fg='white',
-                            command = lambda:selecttest()).place(x=487, y=492, width=320, height=75)
+                            command = lambda:selecttest()).place(x=480, y=486, width=320, height=75)
 
         display = tk.Button(root,
                             text="<SIGN OUT>",
@@ -166,18 +165,18 @@ def homepageaction():
         less_display.place(x=5, y=332, width=80, height=100)
 
         display = tk.Button(root, 
-                            text = 'GO',
+                            text = 'GO!',
                             font='BurbankBigCondensed-Bold 25',
                             bg='#57595c',
                             fg='white',
-                            command = lambda:selectsubject()).place(x=500, y=490, width=320, height=75)
+                            command = lambda:selectsubject()).place(x=480, y=486, width=320, height=75)
 
         display = tk.Button(root,
                             text="<SIGN OUT>",
                             font="BurbankBigCondensed-Bold 17",
                             fg="black",
                             bg="#C5AE22",
-                            borderwidth=0,).place(x=980, y=1.15, width=300, height=50)
+                            borderwidth=0,).place(x=970, y=1.15, width=300, height=50)
                         
     def homedoubt():
         frame = Frame(root, width=1280, height=720)
@@ -215,10 +214,10 @@ def homepageaction():
         less_display.place(x=5, y=332, width=80, height=100)
 
         display = tk.Button(root, 
-                            text = 'GO',
+                            text = 'GO!',
                             font='BurbankBigCondensed-Bold 25',
                             bg='#57595c',
-                            fg='white').place(x=503, y=490, width=320, height=75)
+                            fg='white').place(x=480, y=486, width=320, height=75)
 
         display = tk.Button(root,
                             text="<SIGN OUT>",
@@ -226,7 +225,7 @@ def homepageaction():
                             fg="black",
                             bg="#B327C4",
                             borderwidth=0,
-                            command = lambda:signout()).place(x=980, y=1.15, width=300, height=50)
+                            command = lambda:signout()).place(x=970, y=1.15, width=300, height=50)
 
 
 
