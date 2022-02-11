@@ -17,10 +17,25 @@ def homepageaction():
     root.geometry("1280x720")
     root.title("PrepMasterBETA")
     root.resizable(False, False)
+    
 
     def signout():
         root.destroy()
         loginaction()
+
+    def homeflash1(e):
+        homeflash()
+    def homemcq1(e):
+        homemcq()
+    def homedoubt1(e):
+        homedoubt()
+    def homeleader1(e):
+        homeleader()
+    def selectsubject1(e):
+        selectsubject()
+    def selecttest1(e):
+        selecttest()
+    
 
 
     def homeflash():
@@ -33,6 +48,10 @@ def homepageaction():
         label.pack()
         global x
         x = 1
+
+        root.bind('<Left>',homeleader1)
+        root.bind('<Right>',homemcq1)
+        root.bind('<Return>',selectsubject1)
 
         great_font = font.Font(size = 100)
         great_display = tk.Button(root,
@@ -86,6 +105,10 @@ def homepageaction():
         global x
         x = 2
 
+        root.bind('<Left>',homeflash1)
+        root.bind('<Right>',homedoubt1)
+        root.bind('<Return>',selecttest1)
+
         great_font = font.Font(size = 100)
         great_display = tk.Button(root,
                             text='>',
@@ -137,6 +160,9 @@ def homepageaction():
         label.pack()
         global x
         x = 3
+        root.bind('<Left>',homedoubt1)
+        root.bind('<Right>',homeflash1)
+        root.bind('<Return>',selectsubject1)
 
         great_font = font.Font(size = 100)
         great_display = tk.Button(root,
@@ -176,7 +202,8 @@ def homepageaction():
                             font="BurbankBigCondensed-Bold 17",
                             fg="black",
                             bg="#C5AE22",
-                            borderwidth=0,).place(x=970, y=1.15, width=300, height=50)
+                            borderwidth=0,
+                            command = lambda:signout()).place(x=970, y=1.15, width=300, height=50)
                         
     def homedoubt():
         frame = Frame(root, width=1280, height=720)
@@ -186,6 +213,8 @@ def homepageaction():
         img = PhotoImage(file="CORE\homedoubt.png")
         label = Label(frame, image = img)
         label.pack()
+        root.bind('<Left>',homemcq1)
+        root.bind('<Right>',homeleader1)
 
         great_font = font.Font(size = 100)
         great_display = tk.Button(root,
@@ -240,6 +269,8 @@ def homepageaction():
         label = Label(frame, image = img)
         label.pack()
 
+        root.bind('<Escape>',homemcq1)
+
         button_mcq = tk.Button(root,
                 text='STANDARD MCQ TEST',
                 font='BurbankBigCondensed-Bold 40',
@@ -272,7 +303,7 @@ def homepageaction():
         label.pack()
 
         
-        if x ==1:
+        if x==1:
             button_back = tk.Button(root,
                 text='<BACK>',
                 font='BurbankBigCondensed-Bold 35',
@@ -297,6 +328,13 @@ def homepageaction():
                 borderwidth=0,
                 command = lambda:homeleader()).place(x=5,y=15, width=150, height=70)
 
+        if x==1:
+            root.bind('<Escape>',homeflash1)
+        elif x==2:
+            root.bind('<Escape>',selecttest1)
+        elif x==3:
+            root.bind('<Escape>',homeleader1)
+
 
 
         button_sst = tk.Button(root,
@@ -319,5 +357,6 @@ def homepageaction():
                             
 
     homeflash()
+    
 
     root.mainloop()
