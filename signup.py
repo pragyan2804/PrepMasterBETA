@@ -11,7 +11,7 @@ def signupwindowaction():
     signupwindow = Tk()
     signupwindow.title("PrepMasterBETA")
     signupwindow.geometry("1280x720")   
-    bg = PhotoImage(file = "signup.png")
+    bg = PhotoImage(file = "CORE\signup.png")
     label2 = Label( signupwindow, image = bg)
     label2.place(x = 0, y = 0)
     signupwindow.resizable(False, False)
@@ -62,39 +62,40 @@ def signupwindowaction():
 
 
 
-    def setclass11():
+    def setclass8():
         classdisplay.configure(disabledbackground="#0c5dc0",
                      state="normal",)
         classdisplay.delete(0,"end")
-        classdisplay.insert(0, "Class 11th")
+        classdisplay.insert(0, "Class 8th")
         classdisplay.configure(disabledbackground="#0c5dc0",
                                disabledforeground="white",
                                state="disabled",)
 
-    class11button = tkinter.Button(signupwindow, 
-                                  text="11th", 
+    class8button = tkinter.Button(signupwindow, 
+                                  text="8th", 
                                   font="BurbankBigCondensed-Bold 17",
 			    	              fg="white",
 				                  bg="#0072ff",
 				                  borderwidth=1,
-				                  command=setclass11).place(x=1100, y=353, width=130, height=55)
+				                  command=setclass8).place(x=1100, y=353, width=130, height=55)
 
-    def setclass12():
+    def setclass9():
+        messagebox.showerror("ERROR", "This BETA version is currently only available for class 8th only")
         classdisplay.configure(disabledbackground="#0c5dc0",
                      state="normal",)
         classdisplay.delete(0,"end")
-        classdisplay.insert(0, "Class 12th")
+        classdisplay.insert(0, "Class 8th")
         classdisplay.configure(disabledbackground="#0c5dc0",
                      state="disabled", 
                      disabledforeground="white")
 
 
-    class12button = tkinter.Button(signupwindow, text="12th",
+    class9button = tkinter.Button(signupwindow, text="9th",
 	    			font="BurbankBigCondensed-Bold 17",
 		    		fg="white",
 			    	bg="#0072ff",
 				    borderwidth=1,
-				    command=setclass12).place(x=970, y=353, width=130, height=55)
+				    command=setclass9).place(x=970, y=353, width=130, height=55)
 
 
     school    = Entry(signupwindow,
