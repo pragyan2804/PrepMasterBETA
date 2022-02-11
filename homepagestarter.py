@@ -4,7 +4,6 @@ from tkinter import ttk
 import importlib
 import tkinter
 from tkinter import font
-import matplotlib
 from tkinter.tix import IMAGETEXT
 import PIL
 from PIL import Image
@@ -29,9 +28,11 @@ def homepageaction():
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="homeflash.png")
+        img = PhotoImage(file="CORE\homeflash.png")
         label = Label(frame, image = img)
         label.pack()
+        global x
+        x = 1
 
         great_font = font.Font(size = 100)
         great_display = tk.Button(root,
@@ -62,7 +63,8 @@ def homepageaction():
                             text = 'GO',
                             font='BurbankBigCondensed-Bold 25',
                             bg='#57595c',
-                            fg='white').place(x=480, y=490, width=320, height=75)
+                            fg='white',
+                            command = lambda:selectsubject()).place(x=480, y=490, width=320, height=75)
 
         display = tk.Button(root,
                             text="<SIGN OUT>",
@@ -79,9 +81,11 @@ def homepageaction():
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="homemcq.png")
+        img = PhotoImage(file="CORE\homemcq.png")
         label = Label(frame, image = img)
         label.pack()
+        global x
+        x = 2
 
         great_font = font.Font(size = 100)
         great_display = tk.Button(root,
@@ -129,9 +133,11 @@ def homepageaction():
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="homeleader.png")
+        img = PhotoImage(file="CORE\homeleader.png")
         label = Label(frame, image = img)
         label.pack()
+        global x
+        x = 3
 
         great_font = font.Font(size = 100)
         great_display = tk.Button(root,
@@ -163,7 +169,8 @@ def homepageaction():
                             text = 'GO',
                             font='BurbankBigCondensed-Bold 25',
                             bg='#57595c',
-                            fg='white').place(x=500, y=490, width=320, height=75)
+                            fg='white',
+                            command = lambda:selectsubject()).place(x=500, y=490, width=320, height=75)
 
         display = tk.Button(root,
                             text="<SIGN OUT>",
@@ -177,7 +184,7 @@ def homepageaction():
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="homedoubt.png")
+        img = PhotoImage(file="CORE\homedoubt.png")
         label = Label(frame, image = img)
         label.pack()
 
@@ -230,7 +237,7 @@ def homepageaction():
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="selecttest.png")
+        img = PhotoImage(file="CORE\selecttest.png")
         label = Label(frame, image = img)
         label.pack()
 
@@ -261,17 +268,37 @@ def homepageaction():
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="selectsubject.png")
+        img = PhotoImage(file="CORE\selectsubject.png")
         label = Label(frame, image = img)
         label.pack()
 
-        button_back = tk.Button(root,
+        
+        if x ==1:
+            button_back = tk.Button(root,
+                text='<BACK>',
+                font='BurbankBigCondensed-Bold 35',
+                bg='#0072ff',
+                fg='white',
+                borderwidth=0,
+                command = lambda:homeflash()).place(x=5,y=15, width=150, height=70)
+        elif x==2:
+            button_back = tk.Button(root,
                 text='<BACK>',
                 font='BurbankBigCondensed-Bold 35',
                 bg='#0072ff',
                 fg='white',
                 borderwidth=0,
                 command = lambda:selecttest()).place(x=5,y=15, width=150, height=70)
+        elif x==3:
+            button_back = tk.Button(root,
+                text='<BACK>',
+                font='BurbankBigCondensed-Bold 35',
+                bg='#0072ff',
+                fg='white',
+                borderwidth=0,
+                command = lambda:homeleader()).place(x=5,y=15, width=150, height=70)
+
+
 
         button_sst = tk.Button(root,
                         text='SST',

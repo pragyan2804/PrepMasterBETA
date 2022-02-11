@@ -9,7 +9,6 @@ def loginaction():
 	root.geometry("1280x720")
 	root.resizable(False, False)
 	bg = PhotoImage(file = "login.png")
-	root.eval('tk::PlaceWindow . center')
 	label1 = Label( root, image = bg)
 	label1.place(x = 0, y = 0)
 

@@ -13,7 +13,6 @@ def signupwindowaction():
     signupwindow.geometry("1280x720")   
     bg = PhotoImage(file = "signup.png")
     label2 = Label( signupwindow, image = bg)
-    signupwindow.eval('tk::PlaceWindow . center')
     label2.place(x = 0, y = 0)
     signupwindow.resizable(False, False)
 
