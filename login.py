@@ -29,13 +29,13 @@ def loginaction():
 	def login1(e):
 		messagebox.showinfo("showinfo", "[LOGGED IN] enter")
 		root.destroy()
-		from homepage import homepageaction
+		from homepagestarter import homepageaction
 		homepageaction()
 
 	def login2():
 		messagebox.showinfo("showinfo", "[LOGGED IN] button")
 		root.destroy()
-		from homepage import homepageaction
+		from homepagestarter import homepageaction
 		homepageaction()
 		
 	def signuppage():
