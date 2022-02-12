@@ -4,12 +4,20 @@ from tkinter import ttk
 import importlib
 import tkinter
 from tkinter import font
+import matplotlib
 from tkinter.tix import IMAGETEXT
 import PIL
 from PIL import Image
 import tkinter as tk
 import tkinter.font as font
-from login import loginaction
+from datetime import datetime
+import random
+from turtle import width
+import mysql.connector as mysql
+#from login import loginaction
+
+
+
 
 
 def homepageaction():
@@ -17,25 +25,10 @@ def homepageaction():
     root.geometry("1280x720")
     root.title("PrepMasterBETA")
     root.resizable(False, False)
-    
 
     def signout():
         root.destroy()
-        loginaction()
-
-    def homeflash1(e):
-        homeflash()
-    def homemcq1(e):
-        homemcq()
-    def homedoubt1(e):
-        homedoubt()
-    def homeleader1(e):
-        homeleader()
-    def selectsubject1(e):
-        selectsubject()
-    def selecttest1(e):
-        selecttest()
-    
+ #       loginaction()
 
 
     def homeflash():
@@ -43,15 +36,9 @@ def homepageaction():
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="CORE\homeflash.png")
+        img = PhotoImage(file="homeflash.png")
         label = Label(frame, image = img)
         label.pack()
-        global x
-        x = 1
-
-        root.bind('<Left>',homeleader1)
-        root.bind('<Right>',homemcq1)
-        root.bind('<Return>',selectsubject1)
 
         great_font = font.Font(size = 100)
         great_display = tk.Button(root,
@@ -79,11 +66,10 @@ def homepageaction():
         less_display['font'] = less_font
         less_display.place(x=5, y=332, width=80, height=100)
         display = tkinter.Button(root, 
-                            text = 'GO!',
+                            text = 'GO',
                             font='BurbankBigCondensed-Bold 25',
                             bg='#57595c',
-                            fg='white',
-                            command = lambda:selectsubject()).place(x=480, y=486, width=320, height=75)
+                            fg='white').place(x=480, y=490, width=320, height=75)
 
         display = tk.Button(root,
                             text="<SIGN OUT>",
@@ -91,7 +77,8 @@ def homepageaction():
                             fg="black",
                             bg="#22C53A",
                             borderwidth=0,
-                            command = lambda:signout()).place(x=970, y=1.15, width=300, height=50)
+                            command = lambda:signout()
+                            ).place(x=900, y=1.15, width=500, height=50)
 
 
     def homemcq():
@@ -99,15 +86,9 @@ def homepageaction():
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="CORE\homemcq.png")
+        img = PhotoImage(file="homemcq.png")
         label = Label(frame, image = img)
         label.pack()
-        global x
-        x = 2
-
-        root.bind('<Left>',homeflash1)
-        root.bind('<Right>',homedoubt1)
-        root.bind('<Return>',selecttest1)
 
         great_font = font.Font(size = 100)
         great_display = tk.Button(root,
@@ -136,11 +117,11 @@ def homepageaction():
         less_display.place(x=5, y=333, width=80, height=100)
 
         display = tk.Button(root, 
-                            text = 'GO!',
+                            text = 'GO',
                             font='BurbankBigCondensed-Bold 25',
                             bg='#57595c',
                             fg='white',
-                            command = lambda:selecttest()).place(x=480, y=486, width=320, height=75)
+                            command = lambda:selecttest()).place(x=487, y=492, width=320, height=75)
 
         display = tk.Button(root,
                             text="<SIGN OUT>",
@@ -155,14 +136,9 @@ def homepageaction():
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="CORE\homeleader.png")
+        img = PhotoImage(file="homeleader.png")
         label = Label(frame, image = img)
         label.pack()
-        global x
-        x = 3
-        root.bind('<Left>',homedoubt1)
-        root.bind('<Right>',homeflash1)
-        root.bind('<Return>',selectsubject1)
 
         great_font = font.Font(size = 100)
         great_display = tk.Button(root,
@@ -191,30 +167,26 @@ def homepageaction():
         less_display.place(x=5, y=332, width=80, height=100)
 
         display = tk.Button(root, 
-                            text = 'GO!',
+                            text = 'GO',
                             font='BurbankBigCondensed-Bold 25',
                             bg='#57595c',
-                            fg='white',
-                            command = lambda:selectsubject()).place(x=480, y=486, width=320, height=75)
+                            fg='white').place(x=500, y=490, width=320, height=75)
 
         display = tk.Button(root,
                             text="<SIGN OUT>",
                             font="BurbankBigCondensed-Bold 17",
                             fg="black",
                             bg="#C5AE22",
-                            borderwidth=0,
-                            command = lambda:signout()).place(x=970, y=1.15, width=300, height=50)
+                            borderwidth=0,).place(x=980, y=1.15, width=300, height=50)
                         
     def homedoubt():
         frame = Frame(root, width=1280, height=720)
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="CORE\homedoubt.png")
+        img = PhotoImage(file="homedoubt.png")
         label = Label(frame, image = img)
         label.pack()
-        root.bind('<Left>',homemcq1)
-        root.bind('<Right>',homeleader1)
 
         great_font = font.Font(size = 100)
         great_display = tk.Button(root,
@@ -243,10 +215,10 @@ def homepageaction():
         less_display.place(x=5, y=332, width=80, height=100)
 
         display = tk.Button(root, 
-                            text = 'GO!',
+                            text = 'GO',
                             font='BurbankBigCondensed-Bold 25',
                             bg='#57595c',
-                            fg='white').place(x=480, y=486, width=320, height=75)
+                            fg='white').place(x=503, y=490, width=320, height=75)
 
         display = tk.Button(root,
                             text="<SIGN OUT>",
@@ -254,7 +226,7 @@ def homepageaction():
                             fg="black",
                             bg="#B327C4",
                             borderwidth=0,
-                            command = lambda:signout()).place(x=970, y=1.15, width=300, height=50)
+                            command = lambda:signout()).place(x=980, y=1.15, width=300, height=50)
 
 
 
@@ -265,11 +237,9 @@ def homepageaction():
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="CORE\selecttest.png")
+        img = PhotoImage(file="selecttest.png")
         label = Label(frame, image = img)
         label.pack()
-
-        root.bind('<Escape>',homemcq1)
 
         button_mcq = tk.Button(root,
                 text='STANDARD MCQ TEST',
@@ -298,65 +268,195 @@ def homepageaction():
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="CORE\selectsubject.png")
+        img = PhotoImage(file="selectsubject.png")
         label = Label(frame, image = img)
         label.pack()
 
-        
-        if x==1:
-            button_back = tk.Button(root,
-                text='<BACK>',
-                font='BurbankBigCondensed-Bold 35',
-                bg='#0072ff',
-                fg='white',
-                borderwidth=0,
-                command = lambda:homeflash()).place(x=5,y=15, width=150, height=70)
-        elif x==2:
-            button_back = tk.Button(root,
+        button_back = tk.Button(root,
                 text='<BACK>',
                 font='BurbankBigCondensed-Bold 35',
                 bg='#0072ff',
                 fg='white',
                 borderwidth=0,
                 command = lambda:selecttest()).place(x=5,y=15, width=150, height=70)
-        elif x==3:
-            button_back = tk.Button(root,
-                text='<BACK>',
-                font='BurbankBigCondensed-Bold 35',
-                bg='#0072ff',
-                fg='white',
-                borderwidth=0,
-                command = lambda:homeleader()).place(x=5,y=15, width=150, height=70)
-
-        if x==1:
-            root.bind('<Escape>',homeflash1)
-        elif x==2:
-            root.bind('<Escape>',selecttest1)
-        elif x==3:
-            root.bind('<Escape>',homeleader1)
-
-
 
         button_sst = tk.Button(root,
                         text='SST',
                         font='BurbankBigCondensed-Bold 40',
                         bg='#9518a4',
-                        fg='white',).place(x=86, y=350, width=325, height=195)
+                        fg='white',
+                        command=lambda:selectchapter_ssc()).place(x=86, y=350, width=325, height=195)
 
         button_maths = tk.Button(root,
                         text='MATHS',
                         font='BurbankBigCondensed-Bold 40',
                         bg='#ab9623',
-                        fg='white',).place(x=496, y=350, width=325, height=195)
+                        fg='white',
+                        command=lambda:selectchapter_maths()).place(x=496, y=350, width=325, height=195)
 
-        button_maths = tk.Button(root,
+        button_science = tk.Button(root,
                         text='SCIENCE',
                         font='BurbankBigCondensed-Bold 40',
                         bg='#1eaf32',
-                        fg='white',).place(x=894, y=350, width=325, height=195)
+                        fg='white',
+                        command=lambda:selectchapter_science()).place(x=894, y=350, width=325, height=195)
                             
+    def selectchapter_maths():
+        frame = Frame(root, width=1280, height=720)
+        frame.pack()
+        frame.config(bg='#0073ff')
+        frame.place(anchor='center', relx=0.5, rely=0.5)
+        label_heading = tk.Label(frame,
+                            text='SELECT CHAPTER',
+                            justify='center',
+                            font='BurbankBigCondensed-Bold 70',
+                            bg='#0073FF',
+                            fg='white',
+                            borderwidth=0).place(x=350, y=70, width=500, height=100)
+
+        button_1 = tk.Button(root,
+                        text='CHAPTER 1',
+                        font='BurbankBigCondensed-Bold 40',
+                        bg='#FE7D05',
+                        fg='white').place(x=100, y=220, width=263, height=200)
+
+        button_2 = tk.Button(root,
+                        text='CHAPTER 2',
+                        font='BurbankBigCondensed-Bold 40',
+                        bg='#7FD10B',
+                        fg='white').place(x=470, y=220, width=263, height=200)
+
+        button_3 = tk.Button(root,
+                        text='CHAPTER 3',
+                        font='BurbankBigCondensed-Bold 40',
+                        bg='#CD043F',
+                        fg='white').place(x=830, y=220, width=263, height=200)
+
+        button_4 = tk.Button(root,
+                        text='CHAPTER 4',
+                        font='BurbankBigCondensed-Bold 40',
+                        bg='#F30C0D',
+                        fg='white').place(x=300, y=520, width=263, height=200)
+
+        button_5 = tk.Button(root,
+                        text='CHAPTER 5',
+                        font='BurbankBigCondensed-Bold 40',
+                        bg='#FFCA34',
+                        fg='white').place(x=700, y=520, width=263, height=200)
+
+        button_back = tk.Button(root,
+                        text='<BACK>',
+                        font='BurbankBigCondensed-Bold 35',
+                        bg='#0072ff',
+                        fg='white',
+                        borderwidth=0,
+                        command=lambda:selectsubject()).place(x=5,y=15, width=150, height=70)
+
+    def selectchapter_science():
+        frame = Frame(root, width=1280, height=720)
+        frame.pack()
+        frame.config(bg='#0073ff')
+        label_heading = tk.Label(frame,
+                            text='SELECT CHAPTER',
+                            justify='center',
+                            font='BurbankBigCondensed-Bold 70',
+                            bg='#0073FF',
+                            fg='white',
+                            borderwidth=0).place(x=350, y=70, width=500, height=100)
+
+        button_1 = tk.Button(root,
+                        text='CHAPTER 1',
+                        font='BurbankBigCondensed-Bold 40',
+                        bg='#FE7D05',
+                        fg='white').place(x=100, y=220, width=263, height=200)
+
+        button_2 = tk.Button(root,
+                        text='CHAPTER 2',
+                        font='BurbankBigCondensed-Bold 40',
+                        bg='#F30C0D',
+                        fg='white').place(x=470, y=220, width=263, height=200)
+
+        button_3 = tk.Button(root,
+                        text='CHAPTER 3',
+                        font='BurbankBigCondensed-Bold 40',
+                        bg='#7FD10B',
+                        fg='white').place(x=850, y=220, width=263, height=200)
+
+        button_4 = tk.Button(root,
+                        text='CHAPTER 4',
+                        font='BurbankBigCondensed-Bold 40',
+                        bg='#FFCA34',
+                        fg='white').place(x=250, y=520, width=263, height=200)
+
+        button_5 = tk.Button(root,
+                        text='CHAPTER 5',
+                        font='BurbankBigCondensed-Bold 40',
+                        bg='#F00272',
+                        fg='white').place(x=650, y=520, width=263, height=200)
+
+        button_back = tk.Button(root,
+                        text='<BACK>',
+                        font='BurbankBigCondensed-Bold 35',
+                        bg='#0072ff',
+                        fg='white',
+                        borderwidth=0,
+                        command=lambda:selectsubject()).place(x=5,y=15, width=150, height=70)
+
+    def selectchapter_ssc():
+        frame = Frame(root, width=1280, height=720)
+        frame.pack()
+        frame.config(bg='#0073ff')
+        label_heading = tk.Label(frame,
+                            text='SELECT CHAPTER',
+                            justify='center',
+                            font='BurbankBigCondensed-Bold 70',
+                            bg='#0073FF',
+                            fg='white',
+                            borderwidth=0).place(x=350, y=70, width=500, height=100)
+
+        button_1 = tk.Button(root,
+                        text='CHAPTER 1',
+                        font='BurbankBigCondensed-Bold 40',
+                        bg='#FE7D05',
+                        fg='white').place(x=100, y=220, width=263, height=200)
+
+        button_2 = tk.Button(root,
+                        text='CHAPTER 2',
+                        font='BurbankBigCondensed-Bold 40',
+                        bg='#7FD10B',
+                        fg='white').place(x=470, y=220, width=263, height=200)
+
+        button_3 = tk.Button(root,
+                        text='CHAPTER 3',
+                        font='BurbankBigCondensed-Bold 40',
+                        bg='#FFCA34',
+                        fg='white').place(x=850, y=220, width=263, height=200)
+
+        button_4 = tk.Button(root,
+                        text='CHAPTER 4',
+                        font='BurbankBigCondensed-Bold 40',
+                        bg='#F00272',
+                        fg='white').place(x=250, y=520, width=263, height=200)
+
+        button_5 = tk.Button(root,
+                        text='CHAPTER 5',
+                        font='BurbankBigCondensed-Bold 40',
+                        bg='#CD043F',
+                        fg='white').place(x=650, y=520, width=263, height=200)
+
+        button_back = tk.Button(root,
+                        text='<BACK>',
+                        font='BurbankBigCondensed-Bold 35',
+                        bg='#0072ff',
+                        fg='white',
+                        borderwidth=0,
+                        command=lambda:selectsubject()).place(x=5,y=15, width=150, height=70)
+
+
 
     homeflash()
-    
 
     root.mainloop()
+
+
+homepageaction()
