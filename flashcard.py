@@ -10,6 +10,7 @@ import PIL
 from PIL import Image
 import tkinter as tk
 import tkinter.font as font
+import mysql.connector as mysql
 
 global x 
 x = 1
@@ -17,15 +18,22 @@ global flip
 flip = 0
 
 
-
+#considering only science flashcard questions
 def flashcardscreen():
     root= Tk()
     root.title("PrepMasterBETA")
     root.geometry("1280x720")
     root.resizable(False, False)
-    bg = PhotoImage(file= "CORE\card.png")
+    bg = PhotoImage(file= "card.png")
     label1 = Label(root, image = bg)
     label1.place(x=0, y=0)
+    mycon = mysql.connect(host='localhost', user='root', passwd='dhruv_789_$1', database='prepmaster')
+    mycursor = mycon.cursor()
+    global counter
+    counter = 0
+    mycursor.execute('select * from sci_cell;')
+    flash_data = mycursor.fetchall()
+    corr_ans = ''
 
     global buttonstatus
     buttonstatus = tk.StringVar()
@@ -35,14 +43,15 @@ def flashcardscreen():
         global flip 
         flip = 1
         buttonstatus.set("NEXT")
-        statementtext.set("mujhe kya pata  ¯\_(ツ)_/¯ ")
+        #statementtext.set("mujhe kya pata  ¯\_(ツ)_/¯ ")
+        statementtext.set(flash_data[counter][1])
     
     buttonstatus = tk.StringVar()
         
     def flashquit():
         root.destroy()
-        from homepagestarter import homepageaction
-        homepageaction()
+        #from homepagestarter import homepageaction
+        #homepageaction()
 
     display = tk.Button(root, 
                         text = '<QUIT>',
@@ -69,6 +78,7 @@ def flashcardscreen():
                         text = "1",
                         disabledbackground="#278835",
                         fg="white")
+                        
     flashcardcounter.insert(0, "1/10")
     flashcardcounter.state="disabled"
     flashcardcounter.place(x=1100, y=2, width=200, height=70)
@@ -76,6 +86,7 @@ def flashcardscreen():
     def flashskip():
         global x
         global y
+        global counter
         x += 1
         y = (x,"/10")
         flashcardcounter.configure(disabledbackground="#278835",state="normal",)
@@ -86,6 +97,8 @@ def flashcardscreen():
                                    state="disabled",)
         global buttonstatus
         buttonstatus.set("SKIP")
+        counter += 1
+        statementtext.set(flash_data[counter][0])
 
     
     SKIPdisplay = tk.Button(root, 
@@ -99,7 +112,8 @@ def flashcardscreen():
 
     global texttest 
     statementtext= StringVar()
-    statementtext.set("_________ is called the powerhouse of the cell")
+    #statementtext.set("_________ is called the powerhouse of the cell")
+    statementtext.set(flash_data[counter][0])
 
     TEXTdisplay = Label(root, 
                         font="BurbankBigCondensed-Bold 35", 
@@ -112,18 +126,6 @@ def flashcardscreen():
                         relief="solid",
                         fg="white")
     TEXTdisplay.place(x=408, y=75, width=493, height=450)
-
-
-
-
-
-
-
-
-    
-                        
-    
-
 
 
     root.mainloop()
