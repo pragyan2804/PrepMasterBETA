@@ -1,3 +1,4 @@
+import datetime
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
@@ -9,6 +10,8 @@ import PIL
 from PIL import Image
 import tkinter as tk
 import tkinter.font as font
+import mysql.connector as mysql
+import random
 
 
 
@@ -549,12 +552,22 @@ def homepageaction():
                         bg='#F30C0D',
                         fg='white').place(x=470, y=220, width=263, height=200)
 
-        button_3 = tk.Button(root,
-                        text='Cell - Structure And Functions',
-                        font='BurbankBigCondensed-Bold 30',
-                        wraplength=150,
-                        bg='#7FD10B',
-                        fg='white').place(x=850, y=220, width=263, height=200)
+        if x==1:
+            button_3 = tk.Button(root,
+                            text='Cell - Structure And Functions',
+                            font='BurbankBigCondensed-Bold 30',
+                            wraplength=150,
+                            bg='#7FD10B',
+                            fg='white',
+                            command=flashcardstart()).place(x=850, y=220, width=263, height=200)
+        elif x==2:
+            button_3 = tk.Button(root,
+                            text='Cell - Structure And Functions',
+                            font='BurbankBigCondensed-Bold 30',
+                            wraplength=150,
+                            bg='#7FD10B',
+                            fg='white',
+                            command=mcqstart()).place(x=850, y=220, width=263, height=200)
 
         button_4 = tk.Button(root,
                         text='Force And Pressure',
@@ -629,32 +642,289 @@ def homepageaction():
                         fg='white',
                         borderwidth=0,
                         command = homeleader).place(x=5,y=15, width=150, height=70)
+    
 
+    def flashcardstart():
+        frame = Frame(root, width=1280, height=720)
+        frame.pack()
+        frame.place(anchor='center', relx=0.5, rely=0.5)
+        global img
+        img = PhotoImage(file="CORE\card.png")
+        label = Label(frame, image = img)
+        label.pack()
 
+        mycon = mysql.connect(host='localhost', user='root', passwd='dhruv_789_$1', database='prepmaster')
+        mycursor = mycon.cursor()
+        global counter
+        counter = 0
+        mycursor.execute('select * from sci_cell;')
+        flash_data = mycursor.fetchall()
+        corr_ans = ''
 
+        global buttonstatus
+        buttonstatus = tk.StringVar()
+        buttonstatus = "SKIP"
 
+        def flashflip():
+            global flip 
+            flip = 1
+            buttonstatus.set("NEXT")
+            #statementtext.set("mujhe kya pata  ¯\_(ツ)_/¯ ")
+            statementtext.set(flash_data[counter][1])
+        
+        buttonstatus = tk.StringVar()
+            
+        def flashquit():
+            root.destroy()
+            #from homepagestarter import homepageaction
+            #homepageaction()
 
+        display = tk.Button(root, 
+                            text = '<QUIT>',
+                            font='BurbankBigCondensed-Bold 35',
+                            bg='#278835',
+                            borderwidth=0,
+                            fg='white',
+                            command=flashquit).place(x=5,y=15, width=150, height=70)
 
+        FLIPbutton = tk.Button(root, 
+                            text = 'FLIP',
+                            font='BurbankBigCondensed-Bold 40',
+                            bg='#0073fe',
+                            borderwidth=1,
+                            fg='white',
+                            command = flashflip).place(x=655, y=587, width=250, height=70)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        flashcardcounter = Entry(root, 
+                            font="BurbankBigCondensed-Bold 35", 
+                            width=13, 
+                            bg="#278835",
+                            borderwidth="0",
+                            justify="center",
+                            text = "1",
+                            disabledbackground="#278835",
+                            fg="white")
                             
+        flashcardcounter.insert(0, "1/10")
+        flashcardcounter.state="disabled"
+        flashcardcounter.place(x=1100, y=2, width=200, height=70)
+
+        def flashskip():
+            global x
+            global y
+            global counter
+            x += 1
+            y = (x,"/10")
+            flashcardcounter.configure(disabledbackground="#278835",state="normal",)
+            flashcardcounter.delete(0,"end")
+            flashcardcounter.insert(0, y)
+            flashcardcounter.configure(disabledbackground="#278835",
+                                    disabledforeground="white",
+                                    state="disabled",)
+            global buttonstatus
+            buttonstatus.set("SKIP")
+            counter += 1
+            statementtext.set(flash_data[counter][0])
+
+        
+        SKIPdisplay = tk.Button(root, 
+                            textvariable=buttonstatus,
+                            font='BurbankBigCondensed-Bold 40',
+                            bg='#0073fe',
+                            borderwidth=1,
+                            fg='white',
+                            command=flashskip).place(x=405, y=587, width=250, height=70)
+        buttonstatus.set("SKIP")
+
+        global texttest 
+        statementtext= StringVar()
+        #statementtext.set("_________ is called the powerhouse of the cell")
+        statementtext.set(flash_data[counter][0])
+
+        TEXTdisplay = Label(root, 
+                            font="BurbankBigCondensed-Bold 35", 
+                            width=13,
+                            textvariable=statementtext,
+                            wraplength=450,
+                            bg="#0073fe",
+                            justify="center",
+                            borderwidth="5",
+                            relief="solid",
+                            fg="white")
+        TEXTdisplay.place(x=408, y=75, width=493, height=450)
+
+
+    def mcqstart():
+        frame = Frame(root, width=1280, height=720)
+        frame.pack()
+        frame.place(anchor='center', relx=0.5, rely=0.5)
+        global img
+        img = PhotoImage(file="CORE\mcqtestpage.png")
+        label = Label(frame, image = img)
+        label.pack()
+
+        mycon = mysql.connect(host='localhost', user='root', passwd='dhruv_789_$1', database='prepmaster')
+        mycursor = mycon.cursor()
+        count_button = 0
+        counter=66600
+        running=False 
+        k=0
+
+        def calculate():
+            mycursor.execute('select * from student_record;')
+            check = mycursor.fetchall()
+            global marks_obtained
+            for i in check:
+                if i[0] == i[1]:
+                    correct_count = correct_count + 1
+                elif i[0] == 'Null' :
+                    skip_count = skip_count + 1
+                else:
+                    wrong_count = wrong_count + 1
+            marks_obtained = (count_button*4)-(wrong_count)
+
+
+
+
+        def stopwatch(): 
+            frame= tk.Frame(root,
+                        width= 180, height=70)
+            frame.place(x=560, y=257)
+            label = tk.Label(frame, text="Let's Begin!", fg="white", bg="#3C4142", font="BurbankBigCondensed-Bold 50")
+            label.pack()
+            f = tk.Frame(root)
+            def counter_label(label):
+                    def count():
+                        if running:
+                            global counter
+                            if counter==66600:            
+                                display="Starting..."
+                            else:
+                                tt = datetime.fromtimestamp(counter)
+                                string = tt.strftime("%H:%M:%S")
+                                display=string
+                
+                            label['text']=display   
+                
+                        
+                            label.after(1000, count) 
+                            counter += 1
+                    count()     
+            def Start(label):
+                    global running
+                    running=True
+                    counter_label(label)
+            def Stop():
+                    global running
+                    running = False
+
+            frame.after(0)
+            Start(label)
+        stopwatch()
+
+
+        def next_q(data):
+            global k
+            global count_button
+            count_button = 0
+            k = k+1
+            if k>10:
+                #Stop()
+                messagebox.showwarning('SHOW WARNING','QUESTIONS HAVE ENDED')
+            science_cell(k)
+
+        #mycursor.execute('create table student_response(q_no varchar(30) primary key, response char(1), answer char(1) not null)')
+        def ans_in_db(args):
+            global count_button
+            count_button = count_button + 1
+            if count_button > 1:
+                messagebox.showerror('SHOW ERROR', 'Answer has already been submitted.')
+            if args == 'A':
+                response = option_a
+            elif args == 'B':
+                response = option_b
+            elif args == 'C':
+                response = option_c
+            elif args == 'D':
+                response = option_d
+            mycursor.execute('insert into student_response values("{}","{}")'.format(response, correct_ans,))
+            mycon.commit()
+
+
+
+        def science_cell(k):           
+            mycursor.execute('select * from sci_cell_mcq;')
+            data = mycursor.fetchall()
+            global option_a
+            global option_b
+            global option_c
+            global option_d
+
+            global correct_ans
+            correct_ans = data[k][1]
+            list_ans = [data[k][1],data[k][2],data[k][3],data[k][4]]
+            random.shuffle(list_ans)
+            option_a = list_ans[0]
+            option_b = list_ans[1]
+            option_c = list_ans[2]
+            option_d = list_ans[3]
+
+            question = data[k][0]
+            question_label = tk.Label(root,
+                                text=question,
+                                font='BurbankBigCondensed-Bold 30',
+                                bg='#0c5dc0',
+                                fg='white').place(x=43, y=330, width=1205, height=110)
+
+            option_1 = tk.Button(root,
+                            text=option_a,
+                            font='BurbankBigCondensed-Bold 20',
+                            bg='#B327C4',
+                            fg='white',
+                            command=lambda:ans_in_db('A')).place(x=125, y=470, width=457, height=75)
+
+            option_2 = tk.Button(root,
+                            text=option_b,
+                            font='BurbankBigCondensed-Bold 20',
+                            bg='#22C53A',
+                            fg='white',
+                            command=lambda:ans_in_db('B')).place(x=743, y=470, width=457, height=75)
+
+            option_3 = tk.Button(root,
+                            text=option_c,
+                            font='BurbankBigCondensed-Bold 20',
+                            bg='#C5AE22',
+                            fg='white',
+                            command=lambda:ans_in_db('C')).place(x=125, y=590, width=457, height=75)
+
+
+            option_4 = tk.Button(root,
+                            text=option_d,
+                            font='BurbankBigCondensed-Bold 20',
+                            bg='#D92B2B',
+                            fg='white',
+                            command=lambda:ans_in_db('D')).place(x=741, y=590, width=457, height=75)
+
+            swap_1 = tk.Label(root,
+                            #text=swap,
+                            font='BurbankBigCondensed-Bold 20',
+                            bg='#3D3F41',
+                            fg='white').place(x=1127, y=2, width=150, height=70)
+
+            timer_1 = tk.Button(root,
+                            bg='#3D3F41',
+                            fg='white',
+                            borderwidth=0,
+                            command=lambda:stopwatch().place(x=550, y=257, width=220, height=74))
+            
+            next= tk.Button(root,
+                    text='NEXT',
+                    font='BurbankBigCondensed-Bold 30',
+                    bg='#3D3F41',
+                    fg='white',
+                    command=lambda:next_q(data)).place(x=127, y=2, width=150, height=70)
+
+                           
 
     homeflash()
     
