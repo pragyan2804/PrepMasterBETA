@@ -433,7 +433,7 @@ def homepageaction():
                         fg='white').place(x=470, y=220, width=263, height=200)
 
         button_3 = tk.Button(root,
-                        text='Industries',
+                        text='Industries!',
                         font='BurbankBigCondensed-Bold 30',
                         wraplength=200,
                         bg='#FFCA34',
@@ -488,7 +488,7 @@ def homepageaction():
                     borderwidth=0).place(x=350, y=70, width=500, height=100)
 
         button_1 = tk.Button(root,
-                        text='Linear Equations',
+                        text='Linear Equations!',
                         font='BurbankBigCondensed-Bold 30',
                         wraplength=150,
                         bg='#FE7D05',
@@ -501,7 +501,7 @@ def homepageaction():
                 flashcardstart()
 
         button_2 = tk.Button(root,
-                        text='Mensuration',
+                        text='Mensuration!',
                         font='BurbankBigCondensed-Bold 30',
                         bg='#7FD10B',
                         fg='white',
@@ -559,7 +559,7 @@ def homepageaction():
                     borderwidth=0).place(x=350, y=70, width=500, height=100)
 
         button_1 = tk.Button(root,
-                        text='Crop Production And Management',
+                        text='Crop Production And Management!',
                         font='BurbankBigCondensed-Bold 30',
                         wraplength=200,
                         bg='#FE7D05',
@@ -580,7 +580,7 @@ def homepageaction():
 
 
         button_3 = tk.Button(root,
-                            text='Cell - Structure And Functions',
+                            text='Cell - Structure And Functions!',
                             font='BurbankBigCondensed-Bold 30',
                             wraplength=150,
                             bg='#7FD10B',
@@ -595,7 +595,7 @@ def homepageaction():
         
 
         button_4 = tk.Button(root,
-                        text='Force And Pressure',
+                        text='Force And Pressure!',
                         font='BurbankBigCondensed-Bold 30',
                         bg='#FFCA34',
                         fg='white',
