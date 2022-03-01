@@ -49,7 +49,7 @@ def homepageaction():
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="CORE\homeflash.png")
+        img = PhotoImage(file="homeflash.png")
         label = Label(frame, image = img)
         label.pack()
         global x
@@ -105,7 +105,7 @@ def homepageaction():
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="CORE\homemcq.png")
+        img = PhotoImage(file="homemcq.png")
         label = Label(frame, image = img)
         label.pack()
         global x
@@ -161,7 +161,7 @@ def homepageaction():
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="CORE\homeleader.png")
+        img = PhotoImage(file="homeleader.png")
         label = Label(frame, image = img)
         label.pack()
         global x
@@ -216,7 +216,7 @@ def homepageaction():
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="CORE\homedoubt.png")
+        img = PhotoImage(file="homedoubt.png")
         label = Label(frame, image = img)
         label.pack()
         root.bind('<Left>',homemcq1)
@@ -271,7 +271,7 @@ def homepageaction():
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="CORE\selecttest.png")
+        img = PhotoImage(file="selecttest.png")
         label = Label(frame, image = img)
         label.pack()
 
@@ -304,10 +304,10 @@ def homepageaction():
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="CORE\selectsubject.png")
+        img = PhotoImage(file="selectsubject.png")
         label = Label(frame, image = img)
         label.pack()
-
+        global flashsesh
         
         if x==1:
             button_back = tk.Button(root,
@@ -389,7 +389,7 @@ def homepageaction():
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="CORE\leaderboard.png")
+        img = PhotoImage(file="leaderboard.png")
         label = Label(frame, image = img)
         label.pack()
         button_back = tk.Button(root,
@@ -407,7 +407,7 @@ def homepageaction():
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="CORE\chapbg.png")
+        img = PhotoImage(file="chapbg.png")
         label = Label(frame, image = img)
         label.pack()
         label_heading = tk.Label(root,
@@ -437,7 +437,14 @@ def homepageaction():
                         font='BurbankBigCondensed-Bold 30',
                         wraplength=200,
                         bg='#FFCA34',
-                        fg='white').place(x=850, y=220, width=263, height=200)
+                        fg='white',
+                        command=lambda:industries()).place(x=850, y=220, width=263, height=200)
+        def industries():
+            if x==1:
+                global flashsesh
+                flashsesh=6
+                flashcardstart()
+
 
         button_4 = tk.Button(root,
                         text='The Indian Constituion',
@@ -463,12 +470,13 @@ def homepageaction():
         root.bind('<Escape>',selectsubject1)
 
 
+
     def chapmath():
         frame = Frame(root, width=1280, height=720)
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="CORE\chapbg.png")
+        img = PhotoImage(file="chapbg.png")
         label = Label(frame, image = img)
         label.pack()
         label_heading = tk.Label(root,
@@ -484,13 +492,25 @@ def homepageaction():
                         font='BurbankBigCondensed-Bold 30',
                         wraplength=150,
                         bg='#FE7D05',
-                        fg='white').place(x=100, y=220, width=263, height=200)
+                        fg='white',
+                        command=lambda:linear()).place(x=100, y=220, width=263, height=200)
+        def linear():
+            if x==1:
+                global flashsesh
+                flashsesh=5
+                flashcardstart()
 
         button_2 = tk.Button(root,
                         text='Mensuration',
                         font='BurbankBigCondensed-Bold 30',
                         bg='#7FD10B',
-                        fg='white').place(x=470, y=220, width=263, height=200)
+                        fg='white',
+                        command=lambda:mensuration()).place(x=470, y=220, width=263, height=200)
+        def mensuration():
+            if x==1:
+                global flashsesh
+                flashsesh=4
+                flashcardstart()
 
         button_3 = tk.Button(root,
                         text='Exponents And Powers',
@@ -527,7 +547,7 @@ def homepageaction():
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="CORE\chapbg.png")
+        img = PhotoImage(file="chapbg.png")
         label = Label(frame, image = img)
         label.pack()        
         label_heading = tk.Label(root,
@@ -543,7 +563,13 @@ def homepageaction():
                         font='BurbankBigCondensed-Bold 30',
                         wraplength=200,
                         bg='#FE7D05',
-                        fg='white').place(x=100, y=220, width=263, height=200)
+                        fg='white',
+                        command=lambda:crop()).place(x=100, y=220, width=263, height=200)
+        def crop():
+            if x==1:
+                global flashsesh
+                flashsesh=2
+                flashcardstart()
 
         button_2 = tk.Button(root,
                         text='Coal And Petroleum',
@@ -552,28 +578,33 @@ def homepageaction():
                         bg='#F30C0D',
                         fg='white').place(x=470, y=220, width=263, height=200)
 
-        if x==1:
-            button_3 = tk.Button(root,
+
+        button_3 = tk.Button(root,
                             text='Cell - Structure And Functions',
                             font='BurbankBigCondensed-Bold 30',
                             wraplength=150,
                             bg='#7FD10B',
                             fg='white',
-                            command=flashcardstart()).place(x=850, y=220, width=263, height=200)
-        elif x==2:
-            button_3 = tk.Button(root,
-                            text='Cell - Structure And Functions',
-                            font='BurbankBigCondensed-Bold 30',
-                            wraplength=150,
-                            bg='#7FD10B',
-                            fg='white',
-                            command=mcqstart()).place(x=850, y=220, width=263, height=200)
+                            command=lambda:cell()).place(x=850, y=220, width=263, height=200)
+        def cell():
+            if x==1:
+                global flashsesh
+                flashsesh=1
+                flashcardstart()
+        
+        
 
         button_4 = tk.Button(root,
                         text='Force And Pressure',
                         font='BurbankBigCondensed-Bold 30',
                         bg='#FFCA34',
-                        fg='white').place(x=250, y=500, width=263, height=200)
+                        fg='white',
+                        command=lambda:force()).place(x=250, y=500, width=263, height=200)
+        def force():
+            if x==1:
+                global flashsesh
+                flashsesh=3
+                flashcardstart()
 
         button_5 = tk.Button(root,
                         text='Light',
@@ -601,7 +632,7 @@ def homepageaction():
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="CORE\leaderboard.png")
+        img = PhotoImage(file="leaderboard.png")
         label = Label(frame, image = img)
         label.pack()
         button_back = tkinter.Button(root,
@@ -617,7 +648,7 @@ def homepageaction():
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="CORE\leaderboard.png")
+        img = PhotoImage(file="leaderboard.png")
         label = Label(frame, image = img)
         label.pack()
         button_back = tkinter.Button(root,
@@ -632,7 +663,7 @@ def homepageaction():
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="CORE\leaderboard.png")
+        img = PhotoImage(file="leaderboard.png")
         label = Label(frame, image = img)
         label.pack()
         button_back = tkinter.Button(root,
@@ -643,23 +674,77 @@ def homepageaction():
                         borderwidth=0,
                         command = homeleader).place(x=5,y=15, width=150, height=70)
     
-
+###############FLASHSTART
     def flashcardstart():
         frame = Frame(root, width=1280, height=720)
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="CORE\card.png")
+        img = PhotoImage(file="card.png")
         label = Label(frame, image = img)
         label.pack()
 
-        mycon = mysql.connect(host='localhost', user='root', passwd='dhruv_789_$1', database='prepmaster')
-        mycursor = mycon.cursor()
+        mycon = mysql.connect(host='localhost', user='root', passwd='pragyan123', database='prepmaster')
         global counter
-        counter = 0
-        mycursor.execute('select * from sci_cell;')
-        flash_data = mycursor.fetchall()
-        corr_ans = ''
+
+
+        if flashsesh == 1:
+                mycursor = mycon.cursor()
+                counter = 0
+                mycursor.execute('select * from sci_cell;')
+                flash_data = mycursor.fetchall()
+                corr_ans = ''
+        
+        elif flashsesh == 2:
+                mycursor = mycon.cursor()
+                counter = 0
+                mycursor.execute('select * from sci_crops;')
+                flash_data = mycursor.fetchall()
+                corr_ans = ''
+        
+        elif flashsesh == 3:
+                mycursor = mycon.cursor()
+                counter = 0
+                mycursor.execute('select * from sci_force;')
+                flash_data = mycursor.fetchall()
+                corr_ans = ''
+
+        elif flashsesh == 4:
+                mycursor = mycon.cursor()
+                counter = 0
+                mycursor.execute('select * from math_mensuration;')
+                flash_data = mycursor.fetchall()
+                corr_ans = ''
+
+        elif flashsesh == 5:
+                mycursor = mycon.cursor()
+                counter = 0
+                mycursor.execute('select * from math_linear_eqs;')
+                flash_data = mycursor.fetchall()
+                corr_ans = ''
+
+        elif flashsesh == 6:
+                mycursor = mycon.cursor()
+                counter = 0
+                mycursor.execute('select * from social_industries;')
+                flash_data = mycursor.fetchall()
+                corr_ans = ''
+
+
+
+
+
+
+        def flashskip1(e):
+            flashskip()
+        def flashback1(e):
+            flashback()
+        def flashflip1(e):
+            flashflip()
+
+        root.bind('<Left>',flashback1)
+        root.bind('<Right>',flashskip1)
+        root.bind('<space>',flashflip1)
 
         global buttonstatus
         buttonstatus = tk.StringVar()
@@ -676,8 +761,8 @@ def homepageaction():
             
         def flashquit():
             root.destroy()
-            #from homepagestarter import homepageaction
-            #homepageaction()
+            from homepagestarter import homepageaction
+            homepageaction()
 
         display = tk.Button(root, 
                             text = '<QUIT>',
@@ -715,16 +800,47 @@ def homepageaction():
             global counter
             x += 1
             y = (x,"/10")
-            flashcardcounter.configure(disabledbackground="#278835",state="normal",)
-            flashcardcounter.delete(0,"end")
-            flashcardcounter.insert(0, y)
-            flashcardcounter.configure(disabledbackground="#278835",
-                                    disabledforeground="white",
-                                    state="disabled",)
-            global buttonstatus
-            buttonstatus.set("SKIP")
-            counter += 1
-            statementtext.set(flash_data[counter][0])
+            if x == 11:
+                messagebox.showinfo("SHOWINFO", "Session Complete!")
+                homeflash()
+
+            else:    
+                flashcardcounter.configure(disabledbackground="#278835",state="normal",)
+                flashcardcounter.delete(0,"end")
+                flashcardcounter.insert(0, y)
+                flashcardcounter.configure(disabledbackground="#278835",
+                                        disabledforeground="white",
+                                        state="disabled",)
+                global buttonstatus
+                buttonstatus.set("SKIP")
+                counter += 1
+                statementtext.set(flash_data[counter][0])
+
+        def flashback():
+            global x
+            global y
+            global counter
+            x -= 1
+            y = (x,"/10")
+            if x == 11:
+                messagebox.showinfo("SHOWINFO", "Session Complete!")
+                root.destroy()
+                from homepagestarter import homepageaction
+                homepageaction()
+
+            else:    
+                flashcardcounter.configure(disabledbackground="#278835",state="normal",)
+                flashcardcounter.delete(0,"end")
+                flashcardcounter.insert(0, y)
+                flashcardcounter.configure(disabledbackground="#278835",
+                                        disabledforeground="white",
+                                        state="disabled",)
+                global buttonstatus
+                buttonstatus.set("SKIP")
+                counter -= 1
+                statementtext.set(flash_data[counter][0])
+
+            
 
         
         SKIPdisplay = tk.Button(root, 
@@ -752,6 +868,36 @@ def homepageaction():
                             relief="solid",
                             fg="white")
         TEXTdisplay.place(x=408, y=75, width=493, height=450)
+        great_font = font.Font(size = 100)
+        great_display = tk.Button(root,
+                        text='>',
+                        font="BurbankBigCondensed-Bold 17",
+                        fg="white",
+                        bg="#278835",
+                        width=80,
+                        height=89,
+                        borderwidth=0,
+                        command=lambda:flashskip())
+        great_display['font'] = great_font
+        great_display.place(x=1190, y=332, width=80, height=100)
+
+        less_font = font.Font(size = 100)
+        less_display = tk.Button(root,
+                            text='<',
+                            font="BurbankBigCondensed-Bold 17",
+                            fg="white",
+                            bg="#278835",
+                            width=80,
+                            height=89,
+                            borderwidth=0,
+                            command=lambda:flashback())
+        less_display['font'] = less_font
+        less_display.place(x=5, y=332, width=80, height=100)
+        root.mainloop()
+
+
+
+    ##################################################################
 
 
     def mcqstart():
@@ -759,11 +905,11 @@ def homepageaction():
         frame.pack()
         frame.place(anchor='center', relx=0.5, rely=0.5)
         global img
-        img = PhotoImage(file="CORE\mcqtestpage.png")
+        img = PhotoImage(file="mcqtestpage.png")
         label = Label(frame, image = img)
         label.pack()
 
-        mycon = mysql.connect(host='localhost', user='root', passwd='dhruv_789_$1', database='prepmaster')
+        mycon = mysql.connect(host='localhost', user='root', passwd=' pragyan123', database='prepmaster')
         mycursor = mycon.cursor()
         count_button = 0
         counter=66600
