@@ -16,9 +16,9 @@ global x
 x = 1
 global flip 
 flip = 0
+flashsesh = 6
+ 
 
-
-#considering only science flashcard questions
 def flashcardscreen():
     root= Tk()
     root.title("PrepMasterBETA")
@@ -27,13 +27,67 @@ def flashcardscreen():
     bg = PhotoImage(file= "card.png")
     label1 = Label(root, image = bg)
     label1.place(x=0, y=0)
-    mycon = mysql.connect(host='localhost', user='root', passwd='dhruv_789_$1', database='prepmaster')
-    mycursor = mycon.cursor()
+    mycon = mysql.connect(host='localhost', user='root', passwd='pragyan123', database='prepmaster')
     global counter
-    counter = 0
-    mycursor.execute('select * from sci_cell;')
-    flash_data = mycursor.fetchall()
-    corr_ans = ''
+
+
+    if flashsesh == 1:
+            mycursor = mycon.cursor()
+            counter = 0
+            mycursor.execute('select * from sci_cell;')
+            flash_data = mycursor.fetchall()
+            corr_ans = ''
+    
+    elif flashsesh == 2:
+            mycursor = mycon.cursor()
+            counter = 0
+            mycursor.execute('select * from sci_crops;')
+            flash_data = mycursor.fetchall()
+            corr_ans = ''
+    
+    elif flashsesh == 3:
+            mycursor = mycon.cursor()
+            counter = 0
+            mycursor.execute('select * from sci_force;')
+            flash_data = mycursor.fetchall()
+            corr_ans = ''
+
+    elif flashsesh == 4:
+            mycursor = mycon.cursor()
+            counter = 0
+            mycursor.execute('select * from math_mensuration;')
+            flash_data = mycursor.fetchall()
+            corr_ans = ''
+
+    elif flashsesh == 5:
+            mycursor = mycon.cursor()
+            counter = 0
+            mycursor.execute('select * from math_linear_eqs;')
+            flash_data = mycursor.fetchall()
+            corr_ans = ''
+
+    elif flashsesh == 6:
+            mycursor = mycon.cursor()
+            counter = 0
+            mycursor.execute('select * from social_industries;')
+            flash_data = mycursor.fetchall()
+            corr_ans = ''
+
+
+
+
+
+
+    def flashskip1(e):
+        flashskip()
+    def flashback1(e):
+        flashback()
+    def flashflip1(e):
+        flashflip()
+
+    root.bind('<Left>',flashback1)
+    root.bind('<Right>',flashskip1)
+    root.bind('<space>',flashflip1)
 
     global buttonstatus
     buttonstatus = tk.StringVar()
@@ -50,8 +104,8 @@ def flashcardscreen():
         
     def flashquit():
         root.destroy()
-        #from homepagestarter import homepageaction
-        #homepageaction()
+        from homepagestarter import homepageaction
+        homepageaction()
 
     display = tk.Button(root, 
                         text = '<QUIT>',
@@ -89,16 +143,49 @@ def flashcardscreen():
         global counter
         x += 1
         y = (x,"/10")
-        flashcardcounter.configure(disabledbackground="#278835",state="normal",)
-        flashcardcounter.delete(0,"end")
-        flashcardcounter.insert(0, y)
-        flashcardcounter.configure(disabledbackground="#278835",
-                                   disabledforeground="white",
-                                   state="disabled",)
-        global buttonstatus
-        buttonstatus.set("SKIP")
-        counter += 1
-        statementtext.set(flash_data[counter][0])
+        if x == 11:
+            messagebox.showinfo("SHOWINFO", "Session Complete!")
+            root.destroy()
+            from homepagestarter import homepageaction
+            homepageaction()
+
+        else:    
+            flashcardcounter.configure(disabledbackground="#278835",state="normal",)
+            flashcardcounter.delete(0,"end")
+            flashcardcounter.insert(0, y)
+            flashcardcounter.configure(disabledbackground="#278835",
+                                    disabledforeground="white",
+                                    state="disabled",)
+            global buttonstatus
+            buttonstatus.set("SKIP")
+            counter += 1
+            statementtext.set(flash_data[counter][0])
+
+    def flashback():
+        global x
+        global y
+        global counter
+        x -= 1
+        y = (x,"/10")
+        if x == 11:
+            messagebox.showinfo("SHOWINFO", "Session Complete!")
+            root.destroy()
+            from homepagestarter import homepageaction
+            homepageaction()
+
+        else:    
+            flashcardcounter.configure(disabledbackground="#278835",state="normal",)
+            flashcardcounter.delete(0,"end")
+            flashcardcounter.insert(0, y)
+            flashcardcounter.configure(disabledbackground="#278835",
+                                    disabledforeground="white",
+                                    state="disabled",)
+            global buttonstatus
+            buttonstatus.set("SKIP")
+            counter -= 1
+            statementtext.set(flash_data[counter][0])
+
+        
 
     
     SKIPdisplay = tk.Button(root, 
@@ -127,6 +214,35 @@ def flashcardscreen():
                         fg="white")
     TEXTdisplay.place(x=408, y=75, width=493, height=450)
 
+
+    ###################################################################
+    great_font = font.Font(size = 100)
+    great_display = tk.Button(root,
+                    text='>',
+                    font="BurbankBigCondensed-Bold 17",
+                    fg="white",
+                    bg="#278835",
+                    width=80,
+                    height=89,
+                    borderwidth=0,
+                    command=lambda:flashskip())
+    great_display['font'] = great_font
+    great_display.place(x=1190, y=332, width=80, height=100)
+
+    less_font = font.Font(size = 100)
+    less_display = tk.Button(root,
+                        text='<',
+                        font="BurbankBigCondensed-Bold 17",
+                        fg="white",
+                        bg="#278835",
+                        width=80,
+                        height=89,
+                        borderwidth=0,
+                        command=lambda:flashback())
+    less_display['font'] = less_font
+    less_display.place(x=5, y=332, width=80, height=100)
+
+   
 
     root.mainloop()
 
