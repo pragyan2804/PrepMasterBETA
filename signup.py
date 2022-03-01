@@ -101,7 +101,7 @@ def signupwindowaction():
 				                  command=setclass8).place(x=1100, y=353, width=130, height=55)
 
     def setclass9():
-        messagebox.showerror("ERROR", "This BETA version is currently only available for class 8th only")
+        messagebox.showerror("ERROR", "This BETA version is currently available for class 8th only")
         classdisplay.configure(disabledbackground="#0c5dc0",
                      state="normal",)
         classdisplay.delete(0,"end")
