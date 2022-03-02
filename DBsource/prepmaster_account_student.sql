@@ -31,6 +31,7 @@ CREATE TABLE `account_student` (
   `sst_score` float NOT NULL,
   `math_score` float NOT NULL,
   `sci_score` float NOT NULL,
+  `status` float NOT NULL,
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -41,7 +42,7 @@ CREATE TABLE `account_student` (
 
 LOCK TABLES `account_student` WRITE;
 /*!40000 ALTER TABLE `account_student` DISABLE KEYS */;
-INSERT INTO `account_student` VALUES ('dhruv_dj','dhruvdj21_','Dhruv Kumar','Mayo International School','dhruvdj@gmail.com',0,0,0),('pragyan2804','admin123!','Pragyan Sharma','Mayo International School','pgyn210@gmail.com',0,0,0),('urvashi2004','urvashi22','Urvashi Yadav','Mayo International School','urvashi2004@gmail.com',0,0,0),('ratib','maihukhalnayak','Mohd Ratib','Mayo International School','ratib2084@gmail.com',0,0,0);
+INSERT INTO `account_student` VALUES ('dhruv_dj','dhruvdj21_','Dhruv Kumar','Mayo International School','dhruvdj@gmail.com',34,11,16,0),('pragyan2804','admin123!','Pragyan Sharma','Mayo International School','pgyn210@gmail.com',18,37,24,0),('urvashi2004','urvashi22','Urvashi Yadav','Mayo International School','urvashi2004@gmail.com',31,23,38,0),('ratib','maihukhalnayak','Mohd Ratib','Mayo International School','ratib2084@gmail.com',-16,-5,2,0),('prakhar9603','Prakhar!@#1','Prakhar Sharma','Cambridge School Noida','prakhar9603@gmail.com',40,39,40,0),('void_lash','hapdikitopdi','Aviral Budhiraja','Cambridge School Indirapuram','aviral568@gmail.com',26,21,2,0);
 /*!40000 ALTER TABLE `account_student` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
