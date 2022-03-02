@@ -31,8 +31,8 @@ def calculate():
     for i in check:
         if i[0] == i[1]:
             correct_count = correct_count + 1
-        #elif i[0] == 'Null' :
-        #    skip_count = skip_count + 1
+        elif i[0] == 'Null' :
+            skip_count = skip_count + 1
         else:
             wrong_count = wrong_count + 1
     marks_obtained = (correct_count*4)-(wrong_count*1)
@@ -102,7 +102,7 @@ def next_q(data):
     y = (k,"/10")
     if k>10:
         #Stop()
-        #messagebox.showwarning('SHOW WARNING','QUESTIONS HAVE ENDED')
+        messagebox.showwarning('SHOW WARNING','QUESTIONS HAVE ENDED')
         calculate()
         root.destroy()
     else:    
@@ -134,8 +134,8 @@ def back_q(data):
                                 disabledforeground="white",
                                 state="disabled",)
     math_mens(k)
-
-#mycursor.execute('create table student_response(q_no varchar(30) primary key, response char(1), answer char(1) not null)')
+mycursor.execute('drop table student_response')
+mycursor.execute('create table student_response(q_no varchar(30) primary key, response char(1), answer char(1) not null)')
 def ans_in_db(args):
     global count_button
     count_button = count_button + 1
@@ -149,7 +149,7 @@ def ans_in_db(args):
         response = option_c
     elif args == 'D':
         response = option_d
-    mycursor.execute('insert into student_response values("{}","{}")'.format(response, correct_ans,))
+    mycursor.execute('insert into student_response values("%s","%s");'%(response, correct_ans,))
     mycon.commit()
 
 
@@ -260,4 +260,13 @@ def math_mens(k):
 
 
 math_mens(k)
+
+
+
+
+
+
+
+
+
 
