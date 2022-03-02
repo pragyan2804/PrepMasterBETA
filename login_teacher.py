@@ -1,16 +1,7 @@
-#teacher login not integrated
-from tkinter import *
-from tkinter import messagebox
-from tkinter import ttk
-import importlib
-from login import *
-from signup import *
-import mysql.connector as mysql
-global user
 
-def studentlogin():
+def teacherlogin():
 
-	def loginaction():
+	def loginaction2():
 		root = Tk()
 		root.title("PrepMasterBETA")
 		root.geometry("1280x720")
@@ -18,15 +9,6 @@ def studentlogin():
 		bg = PhotoImage(file = "login.png")
 		label1 = Label( root, image = bg)
 		label1.place(x = 0, y = 0)
-
-		mycon = mysql.connect(host='localhost', user='root', passwd='pragyan123', database='prepmaster')
-		mycursor = mycon.cursor()
-		mycursor.execute('select * from account_student;')
-		account_student = mycursor.fetchall()
-		sql="update account_student set status = %s where status = %s"
-		val=(0,1)
-		mycursor.execute(sql, val)
-		mycon.commit()
 
 		user = StringVar()
 		passwd = StringVar()
@@ -45,23 +27,33 @@ def studentlogin():
 						show="*").place(x=443, y=470, width=435, height=55)
 
 		def login1(e):
-			login()
-
-		def login():
-			for i in account_student:
+			mycon = mysql.connect(host='localhost', user='root', passwd='pragyan123', database='prepmaster')
+			mycursor = mycon.cursor()
+			mycursor.execute('select * from account_teacher;')
+			account_teach = mycursor.fetchall()
+			for i in account_teach:
 				if user.get() == i[0] and passwd.get() == i[1]:
 					messagebox.showinfo('showinfo','LOGIN SUCCESSFUL!')
-					sql="update account_student set status = %s where username= %s"
-					val=(1,user.get())
-					mycursor.execute(sql, val)
-					mycon.commit()
+					root.destroy()
+					from homepagestarter import homepageaction
+					homepageaction()			
+				else:
+					messagebox.showinfo('showinfo','INVALID USERNAME OR PASSWORD')
+
+		def login2():
+			mycon = mysql.connect(host='localhost', user='root', passwd='pragyan123', database='prepmaster')
+			mycursor = mycon.cursor()
+			mycursor.execute('select * from account_teacher;')
+			account_student = mycursor.fetchall()
+			#print(account_teach)
+			#for i in account_teach:
+				#if user.get() == i[0] and passwd.get() == i[1]:
+					messagebox.showinfo('showinfo','LOGIN SUCCESSFUL!')
 					root.destroy()
 					from homepagestarter import homepageaction
 					homepageaction()
-					quit()
-			else:
-				messagebox.showerror('showinfo','INVALID USERNAME OR PASSWORD')
-
+				else:
+					messagebox.showinfo('showinfo','INVALID USERNAME OR PASSWORD')
 
 		def signuppage():
 			root.destroy()
@@ -72,7 +64,7 @@ def studentlogin():
 						text ="START LEARNING!",
 						font ="BurbankBigCondensed-Bold 25",
 						bg="#57595c",
-						command = lambda:login()).place(x=535, y=552, width=250, height=50)
+						command = lambda:login2()).place(x=535, y=552, width=250, height=50)
 		root.bind('<Return>',login1)
 
 
@@ -88,4 +80,8 @@ def studentlogin():
 
 		root.mainloop()
 
-	loginaction()
+	loginaction2()
+
+
+##############################################################################################
+

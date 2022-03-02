@@ -25,6 +25,12 @@ DROP TABLE IF EXISTS `account_student`;
 CREATE TABLE `account_student` (
   `username` varchar(20) NOT NULL,
   `password` varchar(20) NOT NULL,
+  `fullname` varchar(20) NOT NULL,
+  `school` varchar(30) NOT NULL,
+  `email` varchar(30) NOT NULL,
+  `sst_score` float NOT NULL,
+  `math_score` float NOT NULL,
+  `sci_score` float NOT NULL,
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -35,11 +41,10 @@ CREATE TABLE `account_student` (
 
 LOCK TABLES `account_student` WRITE;
 /*!40000 ALTER TABLE `account_student` DISABLE KEYS */;
-INSERT INTO `account_student` VALUES ('dhruv_dj','dhruvdj21_'),('fkjshfkjds','kjahsdkjadha'),('jkhsakjdfh','fljhsdf'),('rocky','maihukhalnayak');
+INSERT INTO `account_student` VALUES ('dhruv_dj','dhruvdj21_','Dhruv Kumar','Mayo International School','dhruvdj@gmail.com',0,0,0),('pragyan2804','admin123!','Pragyan Sharma','Mayo International School','pgyn210@gmail.com',0,0,0),('urvashi2004','urvashi22','Urvashi Yadav','Mayo International School','urvashi2004@gmail.com',0,0,0),('ratib','maihukhalnayak','Mohd Ratib','Mayo International School','ratib2084@gmail.com',0,0,0);
 /*!40000 ALTER TABLE `account_student` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

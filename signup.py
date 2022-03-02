@@ -1,3 +1,4 @@
+from sqlite3 import Cursor
 from tkinter import *
 import tkinter as tk
 from tkinter import messagebox
@@ -17,35 +18,21 @@ def signupwindowaction():
     label2.place(x = 0, y = 0)
     signupwindow.resizable(False, False)
 
-    def accountdone1():
+    def accountdone():
         mycon = mysql.connect(host='localhost', user='root', passwd='pragyan123', database='prepmaster')
         mycursor = mycon.cursor()
-        try:
-            mycursor.execute('insert into sign_in_student values("%s","%s","%s","%s","%s","%s");'%(f_name.get(),user_name.get(),passwd_key.get(),"VIII",school_db.get(),email_db.get(),))
-            mycon.commit()
-            mycursor.execute('insert into account_student values("%s","%s");'%(user_name.get(),passwd_key.get()))
-            mycon.commit()
-            messagebox.showinfo("SHOWINFO", "ACCOUNT CREATED!")
-            signupwindow.destroy()
-            from MasterPrepBETA import loginaction
-            loginaction()        
-        except:
-            messagebox.showerror('SHOWERROR','RECORD INSERTION UNSUCCESSFUL!')
+        #try:
+        mycursor.execute('insert into account_student values("%s","%s","%s","%s","%s","%s","%s","%s","%s");'%(user_name.get(),passwd_key.get(),f_name.get(),school_db.get(),email_db.get(),0,0,0,0))
+        mycon.commit()
+        messagebox.showinfo("SHOWINFO", "ACCOUNT CREATED!")
+        signupwindow.destroy()
+        from MasterPrepBETA import studentlogin
+        studentlogin()        
+        #except:
+            #messagebox.showerror('ERROR','RECORD INSERTION UNSUCCESSFUL!')
 
-    def accountdone2(e):
-        mycon = mysql.connect(host='localhost', user='root', passwd='dhruv_789_$1', database='prepmaster')
-        mycursor = mycon.cursor()
-        try:
-            mycursor.execute('insert into sign_in_student values("%s","%s","%s","%s","%s","%s");'%(f_name.get(),user_name.get(),passwd_key.get(),"VIII",school_db.get(),email_db.get(),))
-            mycon.commit()
-            mycursor.execute('insert into account_student values("%s","%s");'%(user_name.get(),passwd_key.get()))
-            mycon.commit()
-            messagebox.showinfo("SHOWINFO", "ACCOUNT CREATED!")
-            signupwindow.destroy()
-            from MasterPrepBETA import loginaction
-            loginaction()        
-        except:
-            messagebox.showerror('SHOWERROR','RECORD INSERTION UNSUCCESSFUL!')
+    def accountdone1(e):
+        accountdone()
 
     f_name = StringVar()
     fullname = Entry(signupwindow,
@@ -140,8 +127,8 @@ def signupwindowaction():
 			    	bg="#57595c",
                     borderwidth=0,
                     fg='white',
-				    command = lambda:accountdone1()).place(x=920, y=631, width=200, height=53)
-    signupwindow.bind('<Return>',accountdone2)
+				    command = lambda:accountdone()).place(x=920, y=631, width=200, height=53)
+    signupwindow.bind('<Return>',accountdone1)
 
 
 

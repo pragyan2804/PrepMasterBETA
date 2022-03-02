@@ -20,12 +20,20 @@ def homepageaction():
     root.geometry("1280x720")
     root.title("PrepMasterBETA")
     root.resizable(False, False)
+    usernametoshow = ""
+
+    mycon = mysql.connect(host='localhost', user='root', passwd='pragyan123', database='prepmaster')
+    mycursor = mycon.cursor()
+    mycursor.execute('select username from account_student where status = 1;')
+    records = mycursor.fetchall()
+    mycon.commit()
+    usernametoshow = (records)
     
 
     def signout():
         root.destroy()
-        from login import loginaction
-        loginaction()
+        from MasterPrepBETA import studentlogin
+        studentlogin()
 
     def homeflash1(e):
         homeflash()
@@ -39,6 +47,7 @@ def homepageaction():
         selectsubject()
     def selecttest1(e):
         selecttest()
+
 
 
     
@@ -90,6 +99,14 @@ def homepageaction():
                             bg='#57595c',
                             fg='white',
                             command = lambda:selectsubject()).place(x=480, y=486, width=320, height=75)
+
+
+        display = tk.Button(root,
+                            text="signed in as "+str(usernametoshow)[3:-4],
+                            font="BurbankBigCondensed-Bold 17",
+                            fg="black",
+                            bg="#22C53A",
+                            borderwidth=0).place(x=0, y=1.15, width=300, height=50)
 
         display = tk.Button(root,
                             text="<SIGN OUT>",
@@ -149,12 +166,21 @@ def homepageaction():
                             command = lambda:selecttest()).place(x=480, y=486, width=320, height=75)
 
         display = tk.Button(root,
+                            text="signed in as "+str(usernametoshow)[3:-4],
+                            font="BurbankBigCondensed-Bold 17",
+                            fg="black",
+                            bg="#D92B2B",
+                            borderwidth=0).place(x=0, y=1.15, width=300, height=50)
+
+        display = tk.Button(root,
                             text="<SIGN OUT>",
                             font="BurbankBigCondensed-Bold 17",
                             fg="black",
                             bg="#D92B2B",
                             borderwidth=0,
                             command = lambda:signout()).place(x=970, y=1.15, width=300, height=50)
+
+
 
     def homeleader():
         frame = Frame(root, width=1280, height=720)
@@ -204,12 +230,20 @@ def homepageaction():
                             command = lambda:selectsubject()).place(x=480, y=486, width=320, height=75)
 
         display = tk.Button(root,
+                            text="signed in as "+str(usernametoshow)[3:-4],
+                            font="BurbankBigCondensed-Bold 17",
+                            fg="black",
+                            bg="#C5AE22",
+                            borderwidth=0).place(x=0, y=1.15, width=300, height=50)
+
+        display = tk.Button(root,
                             text="<SIGN OUT>",
                             font="BurbankBigCondensed-Bold 17",
                             fg="black",
                             bg="#C5AE22",
                             borderwidth=0,
                             command = lambda:signout()).place(x=970, y=1.15, width=300, height=50)
+
                         
     def homedoubt():
         frame = Frame(root, width=1280, height=720)
@@ -253,6 +287,13 @@ def homepageaction():
                             font='BurbankBigCondensed-Bold 25',
                             bg='#57595c',
                             fg='white').place(x=480, y=486, width=320, height=75)
+
+        display = tk.Button(root,
+                            text="signed in as "+str(usernametoshow)[3:-4],
+                            font="BurbankBigCondensed-Bold 17",
+                            fg="black",
+                            bg="#B327C4",
+                            borderwidth=0).place(x=0, y=1.15, width=300, height=50)
 
         display = tk.Button(root,
                             text="<SIGN OUT>",
@@ -1076,6 +1117,3 @@ def homepageaction():
     
 
     root.mainloop()
-
-
-homepageaction()
