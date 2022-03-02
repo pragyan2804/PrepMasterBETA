@@ -134,8 +134,9 @@ def back_q(data):
                                 disabledforeground="white",
                                 state="disabled",)
     math_mens(k)
+
 mycursor.execute('drop table student_response')
-mycursor.execute('create table student_response(q_no varchar(30) primary key, response char(1), answer char(1) not null)')
+mycursor.execute('create table student_response(q_no varchar(30) primary key, response char(20), answer char(20) not null)')
 def ans_in_db(args):
     global count_button
     count_button = count_button + 1
@@ -149,7 +150,7 @@ def ans_in_db(args):
         response = option_c
     elif args == 'D':
         response = option_d
-    mycursor.execute('insert into student_response values("%s","%s");'%(response, correct_ans,))
+    mycursor.execute('insert into student_response values("%s","%s","%s",);'%(k,response, correct_ans,))
     mycon.commit()
 
 
