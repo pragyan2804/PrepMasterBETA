@@ -143,6 +143,25 @@ def homepageaction():
     global iscomp
     iscomp=0
 
+    def math_mens_mcq_done():
+        resultupdate = compresult
+        sql = "update account_student set math_score = %s where status = %s"
+        val = (resultupdate,1)
+        mycon.commit()
+        root.destroy()
+        from homepagestarter import homepageaction
+        homepageaction()
+
+    def sci_cell_mcq_done():
+        resultupdate = compresult
+        sql = "update account_student set sci_score = %s where status = %s"
+        val = (resultupdate,1)
+        print(val)
+        mycon.commit()
+        root.destroy()
+        from homepagestarter import homepageaction
+        homepageaction()
+
 
 
 
@@ -649,7 +668,7 @@ def homepageaction():
                 flashcardstart()
 
         button_2 = tk.Button(root,
-                        text='Mensuration!',
+                        text='Mensuration!!',
                         font='BurbankBigCondensed-Bold 30',
                         bg='#7FD10B',
                         fg='white',
@@ -733,7 +752,7 @@ def homepageaction():
 
 
         button_3 = tk.Button(root,
-                            text='Cell - Structure And Functions!',
+                            text='Cell - Structure And Functions!!',
                             font='BurbankBigCondensed-Bold 30',
                             wraplength=150,
                             bg='#7FD10B',
@@ -1414,15 +1433,7 @@ def homepageaction():
             messagebox.showinfo('RESULT', endresult)
 
             global compresult
-            compresult = (marks_obtained/timerq)
-
-            def math_mens_mcq_done():
-                sql = "UPDATE account_student SET math_score = %s WHERE status = %s"
-                val = (marks_obtained,1)
-                mycursor.execute(sql, val)
-                mycon.commit()
-                messagebox.showinfo('RESULT', "DEBUG")
-                root.destroy()
+            compresult = (marks_obtained/(timerq/60))
 
 
             if iscomp==1 and mcqsesh==1:
@@ -1430,20 +1441,14 @@ def homepageaction():
             
 
             elif iscomp==1 and mcqsesh==2:
-                sql = "UPDATE account_student SET sci_score = %s WHERE status = %s"
-                val = (compresult, "1")
-                mycursor.execute(sql, val)
-                mycon.commit()
-
+                sci_cell_mcq_done()
             else:
-                messagebox.showinfo('RESULT', "DEBUG")
+                from homepagestarter import homepageaction
+                homepageaction()
                 
 
-
-
-
-
         stopwatch()
+
 
         flashcardcounter = Entry(root, 
                             font="BurbankBigCondensed-Bold 35", 
