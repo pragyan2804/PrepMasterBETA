@@ -1,5 +1,4 @@
 import datetime
-from re import A
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
@@ -13,8 +12,6 @@ import tkinter as tk
 import tkinter.font as font
 import mysql.connector as mysql
 import random
-
-from teacherdoubt import doubtteacher
 
 
 
@@ -50,21 +47,8 @@ def homepageaction():
         selectsubject()
     def selecttest1(e):
         selecttest()
-    def doubtstudent1(e):
-        if str(usernametoshow)[3:-4]=="teacher":
-            doubtteacher()
-        else:
-            doubtstudent()
-    
-
     global leaderselect
     leaderselect = int
-    global mcqsesh
-    mcqsesh = int
-    global count_button
-    count_button = 0
-
-
 
     def leadssc():
         global leaderselect
@@ -91,94 +75,12 @@ def homepageaction():
         global table_data
         table_data = mycursor.fetchall()  
         leaderstart()
-        
-    def mathmensmcq():
-        global mcqsesh
-        global data
-        mcqsesh==1
-        mycursor.execute('select * from math_mens_mcq;')
-        data = mycursor.fetchall()
-        mcqstart()
-
-    def scicellmcq():
-        global mcqsesh
-        global data
-        mcqsesh==2   
-        mycursor.execute('select * from sci_cell_mcq;')
-        data = mycursor.fetchall()
-        mcqstart()
-
-    def stopwatch(): 
-        frame= tk.Frame(root,
-                    width= 210, height=150)
-        frame.place(x=609, y=267)
-        global label1
-        label1 = tk.Label(frame, text="Let's Begin!", fg="white", bg="#3C4142", font="BurbankBigCondensed-Bold 40")
-        label1.pack()
-        global f
-        f = tk.Frame(root)
-
-        def counter_label(label1):
-                def count():
-                    if running:
-                        global counter
-                        if counter==66600:            
-                            display="Starting..."
-                        else:
-                            tt = datetime.datetime.fromtimestamp(counter)
-                            global timeval
-                            timeval = tt.strftime("%M:%S")
-                            display=timeval
-                            label1.pack()
-            
-                        label1['text']=display   
-                        label1.after(1000, count) 
-                        counter += 1
-                        global timerq
-                        timerq=counter-66600
-                count()     
-        def Start(label1):
-                global running
-                running=True
-                counter_label(label1)
-
-        def Stop():
-                global running
-                running = False
-        
-        frame.after(0)
-        Start(label1)
-
-    global iscomp
-    iscomp=0
-
-    def math_mens_mcq_done():
-        resultupdate = compresult
-        sql = "update account_student set math_score = %s where status = %s"
-        val = (resultupdate,1)
-        mycursor.execute(sql,val)
-        mycon.commit()
-        root.destroy()
-        from homepagestarter import homepageaction
-        homepageaction()
-
-    def sci_cell_mcq_done():
-        resultupdate = compresult
-        sql = "update account_student set sci_score = %s where status = %s"
-        val = (resultupdate,1)
-        mycursor.execute(sql,val)
-        mycon.commit()
-        root.destroy()
-        from homepagestarter import homepageaction
-        homepageaction()
-
-
 
 
 
     
 
-#######################################################################################################
+
     def homeflash():
         frame = Frame(root, width=1280, height=720)
         frame.pack()
@@ -370,403 +272,6 @@ def homepageaction():
                             borderwidth=0,
                             command = lambda:signout()).place(x=970, y=1.15, width=300, height=50)
 
-
-    def doubtteacher():    
-        frame = Frame(root, width=1280, height=720)
-        frame.pack()
-        frame.place(anchor='center', relx=0.5, rely=0.5)
-        global img
-        img = PhotoImage(file="chapbg.png")
-        label = Label(frame, image = img)
-        label.pack()
-        global counter
-        counter = 0
-
-
-        mycon = mysql.connect(host='localhost', user='root', passwd='pragyan123', database='prepmaster')
-
-        mycursor = mycon.cursor()
-        mycursor.execute('select username from account_student where status = 1;')
-        records = mycursor.fetchall()
-        mycon.commit()
-        leaderuser = (records)
-        leaderuserin = (str(leaderuser)[3:-4])
-        #######################################
-
-        global entrycount
-
-        mycursor = mycon.cursor()
-        sql = 'select * from doubt_record where pending = %s;'
-        val = (1,)
-        mycursor.execute(sql,val)
-        records = mycursor.fetchall()
-        mycon.commit()
-        entrycount = len(records)
-        print(entrycount)
-
-        
-        def submitdoubt():
-            mycon = mysql.connect(host='localhost', user='root', passwd='pragyan123', database='prepmaster')
-            mycursor = mycon.cursor()
-            sql='update doubt_record set solution_given = %s where doubt_given = %s'
-            val= (doubtgiven.get(),prevqtext.get())
-            mycursor.execute(sql,val)
-            mycon.commit()
-
-            mycursor = mycon.cursor()
-            sql1='update doubt_record set pending = %s where doubt_given = %s'
-            val1= (0,prevqtext.get())
-            mycursor.execute(sql1,val1)
-            mycon.commit()
-            messagebox.showinfo("SUBMITTED", "DOUBT Answered")
-            homedoubt()
-
-        def submitdoubt1(e):
-            submitdoubt()
-
-
-
-        doubtgiven = StringVar()
-        doubtenter = Entry(root,
-                    textvariable=doubtgiven,
-                    justify="center",
-                    bg="#0c5dc0",
-                    font="BurbankBigCondensed-Bold 25",).place(x=250, y=200, width=790, height=90)
-
-
-
-
-        def doubtnext():
-            global counter    
-            counter += 1
-            global checker
-            checker = counter+1
-            if (checker>entrycount):
-                counter=0
-            prevqtext.set(records[counter][1])
-            answergiven.set(records[counter][0])
-
-
-        def doubtback():
-            global counter    
-            counter -= 1
-            global checker
-            checker = counter+1
-            if (checker==0):
-                counter=entrycount-1
-            prevqtext.set(records[counter][1])
-            answergiven.set(records[counter][0])
-
-        def doubtnext1(e):
-            doubtnext()
-        def doubtback1(e):
-            doubtback()
-
-        root.bind('<Left>',doubtback1)
-        root.bind('<Right>',doubtnext1)
-
-
-        global prevqtext 
-        prevqtext= StringVar()
-        if entrycount == 0:
-            prevqtext.set("(NO PREVIOUSLY ASKED DOUBTS)")
-        else:
-            mycursor = mycon.cursor()
-            sql = 'select * from doubt_record where pending = %s;'
-            val = (1,)
-            mycursor.execute(sql,val)
-            records = mycursor.fetchall()
-            mycon.commit()
-            prevqtext= StringVar()
-            prevqtext.set(records[counter][1])
-
-
-
-
-        prevqdisplay = Label(root, 
-                        font="BurbankBigCondensed-Bold 17", 
-                        width=13,
-                        textvariable=prevqtext,
-                        bg="#0c5dc0",
-                        justify="center",
-                        borderwidth="1",
-                        relief="solid",
-                        fg="white")
-        prevqdisplay.place(x=250, y=370, width=790, height=90)
-
-
-
-
-        global answergiven
-        answergiven= StringVar()
-        if entrycount == 0:
-            answergiven.set("(NO ANSWER AVAILABLE)")
-        else:
-            mycursor = mycon.cursor()
-            sql = 'select * from doubt_record where pending = %s;'
-            val = (1,)
-            mycursor.execute(sql,val)
-            records = mycursor.fetchall()
-            mycon.commit()
-            answergiven= StringVar()
-            answergiven.set(records[counter][0])
-
-
-        answerdisplay = Label(root, 
-                        font="BurbankBigCondensed-Bold 17", 
-                        width=13,
-                        textvariable=answergiven,
-                        bg="#0c5dc0",
-                        justify="center",
-                        borderwidth="1",
-                        relief="solid",
-                        fg="white")
-        answerdisplay.place(x=250, y=450, width=790, height=90)
-
-
-
-
-
-        button_back = tk.Button(root,
-            text='<BACK>',
-            font='BurbankBigCondensed-Bold 35',
-            bg='#0072ff',
-            fg='white',
-            borderwidth=0,
-            command=lambda:homedoubt()).place(x=5,y=15, width=150, height=70)
-        root.bind('<Escape>',homedoubt1)
-
-        Display = Button(root, 
-                    text ="SUBMIT",
-                    font ="BurbankBigCondensed-Bold 25",
-                    bg="#57595c",
-                    command=lambda:submitdoubt()).place(x=535, y=600, width=250, height=50)
-        root.bind('<Return>',submitdoubt1)
-
-        great_font = font.Font(size = 100)
-        great_display = tk.Button(root,
-                        text='>',
-                        font="BurbankBigCondensed-Bold 17",
-                        fg="white",
-                        bg="#0072ff",
-                        width=80,
-                        height=89,
-                        borderwidth=0,
-                        command=lambda:doubtnext())
-        great_display['font'] = great_font
-        great_display.place(x=1190, y=300, width=80, height=100)
-
-        less_font = font.Font(size = 100)
-        less_display = tk.Button(root,
-                            text='<',
-                            font="BurbankBigCondensed-Bold 17",
-                            fg="white",
-                            bg="#0072ff",
-                            width=80,
-                            height=89,
-                            borderwidth=0,
-                            command=lambda:doubtback())
-        less_display['font'] = less_font
-        less_display.place(x=5, y=300, width=80, height=100)
-
-        root.mainloop()
-
-    def doubtstudent():    
-        frame = Frame(root, width=1280, height=720)
-        frame.pack()
-        frame.place(anchor='center', relx=0.5, rely=0.5)
-        global img
-        img = PhotoImage(file="chapbg.png")
-        label = Label(frame, image = img)
-        label.pack()
-
-        global counter
-        counter = 0
-
-
-        mycon = mysql.connect(host='localhost', user='root', passwd='pragyan123', database='prepmaster')
-
-        mycursor = mycon.cursor()
-        mycursor.execute('select username from account_student where status = 1;')
-        records = mycursor.fetchall()
-        mycon.commit()
-        leaderuser = (records)
-        leaderuserin = (str(leaderuser)[3:-4])
-        #######################################
-
-        global entrycount
-
-        mycursor = mycon.cursor()
-        sql = 'select * from doubt_record where username = %s;'
-        val = (leaderuserin,)
-        mycursor.execute(sql,val)
-        records = mycursor.fetchall()
-        mycon.commit()
-        entrycount = len(records)
-        print(entrycount)
-
-
-        def submitdoubt():
-            mycon = mysql.connect(host='localhost', user='root', passwd='pragyan123', database='prepmaster')
-            mycursor = mycon.cursor()
-            mycursor.execute('insert into doubt_record values("%s","%s","%s","%s");'%(leaderuserin,doubtgiven.get(),"(NO ANSWER AVAILABLE)",1))
-            mycon.commit()
-            messagebox.showinfo("SUBMITTED", "DOUBT SUBMITTED")
-            homedoubt()
-
-        def submitdoubt1(e):
-            submitdoubt()
-
-
-
-
-        doubtgiven = StringVar()
-        doubtenter = Entry(root,
-                    textvariable=doubtgiven,
-                    justify="center",
-                    bg="#0c5dc0",
-                    font="BurbankBigCondensed-Bold 25",).place(x=250, y=200, width=790, height=90)
-
-
-
-
-        def doubtnext():
-            global counter    
-            counter += 1
-            global checker
-            checker = counter+1
-            if (checker>entrycount):
-                counter=0
-            prevqtext.set(records[counter][1])
-            answergiven.set(records[counter][2])
-
-
-        def doubtback():
-            global counter    
-            counter -= 1
-            global checker
-            checker = counter+1
-            if (checker==0):
-                counter=entrycount-1
-            prevqtext.set(records[counter][1])
-            answergiven.set(records[counter][2])
-
-        def doubtnext1(e):
-            doubtnext()
-        def doubtback1(e):
-            doubtback()
-
-        root.bind('<Left>',doubtback1)
-        root.bind('<Right>',doubtnext1)
-
-
-        global prevqtext 
-        prevqtext= StringVar()
-        if entrycount == 0:
-            prevqtext.set("(NO PREVIOUSLY ASKED DOUBTS)")
-        else:
-            mycursor = mycon.cursor()
-            sql = 'select * from doubt_record where username = %s;'
-            val = (leaderuserin,)
-            mycursor.execute(sql,val)
-            records = mycursor.fetchall()
-            mycon.commit()
-            prevqtext= StringVar()
-            prevqtext.set(records[counter][1])
-
-
-
-
-        prevqdisplay = Label(root, 
-                        font="BurbankBigCondensed-Bold 17", 
-                        width=13,
-                        textvariable=prevqtext,
-                        bg="#0c5dc0",
-                        justify="center",
-                        borderwidth="1",
-                        relief="solid",
-                        fg="white")
-        prevqdisplay.place(x=250, y=370, width=790, height=90)
-
-
-
-
-        global answergiven
-        answergiven= StringVar()
-        if entrycount == 0:
-            answergiven.set("(NO ANSWER AVAILABLE)")
-        else:
-            mycursor = mycon.cursor()
-            sql = 'select * from doubt_record where username = %s;'
-            val = (leaderuserin,)
-            mycursor.execute(sql,val)
-            records = mycursor.fetchall()
-            mycon.commit()
-            answergiven= StringVar()
-            answergiven.set(records[counter][2])
-
-
-        answerdisplay = Label(root, 
-                        font="BurbankBigCondensed-Bold 17", 
-                        width=13,
-                        textvariable=answergiven,
-                        bg="#0c5dc0",
-                        justify="center",
-                        borderwidth="1",
-                        relief="solid",
-                        fg="white")
-        answerdisplay.place(x=250, y=450, width=790, height=90)
-
-
-
-
-
-        button_back = tk.Button(root,
-            text='<BACK>',
-            font='BurbankBigCondensed-Bold 35',
-            bg='#0072ff',
-            fg='white',
-            borderwidth=0,
-            command=lambda:homedoubt()).place(x=5,y=15, width=150, height=70)
-        root.bind('<Escape>',homedoubt1)
-        
-
-        Display = Button(root, 
-                    text ="SUBMIT",
-                    font ="BurbankBigCondensed-Bold 25",
-                    bg="#57595c",
-                    command=lambda:submitdoubt()).place(x=535, y=600, width=250, height=50)
-        root.bind('<Return>',submitdoubt1)
-
-        great_font = font.Font(size = 100)
-        great_display = tk.Button(root,
-                        text='>',
-                        font="BurbankBigCondensed-Bold 17",
-                        fg="white",
-                        bg="#0072ff",
-                        width=80,
-                        height=89,
-                        borderwidth=0,
-                        command=lambda:doubtnext())
-        great_display['font'] = great_font
-        great_display.place(x=1190, y=300, width=80, height=100)
-
-        less_font = font.Font(size = 100)
-        less_display = tk.Button(root,
-                            text='<',
-                            font="BurbankBigCondensed-Bold 17",
-                            fg="white",
-                            bg="#0072ff",
-                            width=80,
-                            height=89,
-                            borderwidth=0,
-                            command=lambda:doubtback())
-        less_display['font'] = less_font
-        less_display.place(x=5, y=300, width=80, height=100)
-
-        root.mainloop()
-
-
                         
     def homedoubt():
         frame = Frame(root, width=1280, height=720)
@@ -778,9 +283,6 @@ def homepageaction():
         label.pack()
         root.bind('<Left>',homemcq1)
         root.bind('<Right>',homeleader1)
-        root.bind('<Return>',doubtstudent1)
-        global x
-        x = 4
 
         great_font = font.Font(size = 100)
         great_display = tk.Button(root,
@@ -812,8 +314,7 @@ def homepageaction():
                             text = 'GO!',
                             font='BurbankBigCondensed-Bold 25',
                             bg='#57595c',
-                            fg='white',
-                            command = lambda:doubtstudent()).place(x=480, y=486, width=320, height=75)
+                            fg='white').place(x=480, y=486, width=320, height=75)
 
         display = tk.Button(root,
                             text="signed in as "+str(usernametoshow)[3:-4],
@@ -845,29 +346,19 @@ def homepageaction():
 
         root.bind('<Escape>',homemcq1)
 
-        def selectedstandard():
-            global iscomp
-            iscomp=0
-            selectsubject()
-
         button_mcq = tk.Button(root,
                 text='STANDARD MCQ TEST',
                 font='BurbankBigCondensed-Bold 40',
                 bg='#c32b2b',
                 fg='white',
-                command = lambda:selectedstandard()).place(x=63, y=240, width=500, height=300)
-
-        def selectedcomp():
-            global iscomp
-            iscomp=1
-            selectsubject()
+                command = lambda:selectsubject()).place(x=63, y=240, width=500, height=300)
 
         button_mcq_comp = tk.Button(root,
                 text='COMPETITIVE MASTERTEST',
                 font='BurbankBigCondensed-Bold 35',
                 bg='#c32b2b',
                 fg='white',
-                command = lambda:selectedcomp()).place(x=723, y=240, width=500, height=300)
+                command = lambda:selectsubject()).place(x=723, y=240, width=500, height=300)
 
         button_back = tk.Button(root,
                 text='<BACK>',
@@ -1079,7 +570,7 @@ def homepageaction():
                 flashcardstart()
 
         button_2 = tk.Button(root,
-                        text='Mensuration!!',
+                        text='Mensuration!',
                         font='BurbankBigCondensed-Bold 30',
                         bg='#7FD10B',
                         fg='white',
@@ -1089,11 +580,6 @@ def homepageaction():
                 global flashsesh
                 flashsesh=4
                 flashcardstart()
-            elif x==2:
-                global mcqsesh
-                mcqsesh=1
-                mathmensmcq()
-
 
         button_3 = tk.Button(root,
                         text='Exponents And Powers',
@@ -1163,7 +649,7 @@ def homepageaction():
 
 
         button_3 = tk.Button(root,
-                            text='Cell - Structure And Functions!!',
+                            text='Cell - Structure And Functions!',
                             font='BurbankBigCondensed-Bold 30',
                             wraplength=150,
                             bg='#7FD10B',
@@ -1174,10 +660,6 @@ def homepageaction():
                 global flashsesh
                 flashsesh=1
                 flashcardstart()
-            elif x==2:
-                global mcqsesh
-                mcqsesh=2
-                scicellmcq()
         
         
 
@@ -1241,8 +723,7 @@ def homepageaction():
                         font='BurbankBigCondensed-Bold 35',
                         bg='#0072ff',
                         fg='white',
-                        borderwidth=0,
-                        command=lambda:homeleader()).place(x=5,y=15, width=150, height=70)
+                        borderwidth=0).place(x=5,y=15, width=150, height=70)
 
         rankhead = Entry(root,
                         font="BurbankBigCondensed-Bold 45", 
@@ -1800,7 +1281,7 @@ def homepageaction():
 
 
 
-##################################################################################################
+    ##################################################################
 
 
     def mcqstart():
@@ -1812,24 +1293,17 @@ def homepageaction():
         label = Label(frame, image = img)
         label.pack()
 
-        mycon = mysql.connect(host='localhost', user='root', passwd='pragyan123', database='prepmaster')
-
+        mycon = mysql.connect(host='localhost', user='root', passwd=' pragyan123', database='prepmaster')
+        mycursor = mycon.cursor()
         count_button = 0
-        global counter
         counter=66600
         running=False 
-        global k
         k=0
-        global mcqsesh
 
         def calculate():
-            mycursor.execute('drop table student_record')
-            mycursor.execute('create table student_record (marks_obtained float, correct_ans_count float,incorrect_ans_count float)')
-            mycursor.execute('select * from student_response;')
+            mycursor.execute('select * from student_record;')
             check = mycursor.fetchall()
             global marks_obtained
-            correct_count = 0
-            wrong_count = 0
             for i in check:
                 if i[0] == i[1]:
                     correct_count = correct_count + 1
@@ -1837,137 +1311,80 @@ def homepageaction():
                     skip_count = skip_count + 1
                 else:
                     wrong_count = wrong_count + 1
-            marks_obtained = (correct_count*4)-(wrong_count*1)
-            mycursor.execute('insert into student_record values({},{},{})'.format(marks_obtained, correct_count, wrong_count))
-            mycon.commit()
-            endresult=("TEST COMPLETE! || SCORE:"+ str(marks_obtained)+ " || CORRECT:"+str(correct_count)+ " || INCORRECT:"+str(wrong_count)+ " || TIME:"+str(timerq)+ " SECONDS ||")
-            messagebox.showinfo('RESULT', endresult)
-
-            global compresult
-            compresult = (marks_obtained/(timerq/60))
+            marks_obtained = (count_button*4)-(wrong_count)
 
 
-            if iscomp==1 and mcqsesh==1:
-                math_mens_mcq_done()
-            
 
-            elif iscomp==1 and mcqsesh==2:
-                sci_cell_mcq_done()
-            else:
-                from homepagestarter import homepageaction
-                homepageaction()
+
+        def stopwatch(): 
+            frame= tk.Frame(root,
+                        width= 180, height=70)
+            frame.place(x=560, y=257)
+            label = tk.Label(frame, text="Let's Begin!", fg="white", bg="#3C4142", font="BurbankBigCondensed-Bold 50")
+            label.pack()
+            f = tk.Frame(root)
+            def counter_label(label):
+                    def count():
+                        if running:
+                            global counter
+                            if counter==66600:            
+                                display="Starting..."
+                            else:
+                                tt = datetime.fromtimestamp(counter)
+                                string = tt.strftime("%H:%M:%S")
+                                display=string
                 
+                            label['text']=display   
+                
+                        
+                            label.after(1000, count) 
+                            counter += 1
+                    count()     
+            def Start(label):
+                    global running
+                    running=True
+                    counter_label(label)
+            def Stop():
+                    global running
+                    running = False
 
+            frame.after(0)
+            Start(label)
         stopwatch()
 
 
-        flashcardcounter = Entry(root, 
-                            font="BurbankBigCondensed-Bold 35", 
-                            width=13, 
-                            bg="#0072ff",
-                            borderwidth="0",
-                            justify="center",
-                            text = "1",
-                            disabledbackground="#0072ff",
-                            fg="white")
-                            
-        flashcardcounter.insert(0, "1/10")
-        flashcardcounter.state="disabled"
-        flashcardcounter.place(x=1100, y=2, width=200, height=70)
-
-
         def next_q(data):
-            global y
-            global counter
             global k
-            global x
             global count_button
             count_button = 0
-            global k
             k = k+1
-            y = (k+1,"/10")
-            if k==10:
-                global running
-                running = False
-                messagebox.showwarning('QUIZ COMPLETE','QUESTIONS HAVE ENDED, SESSION ENDING..')
-                calculate()
-            else:    
-                flashcardcounter.configure(disabledbackground="#0072ff",state="normal",)
-                flashcardcounter.delete(0,"end")
-                flashcardcounter.insert(0, y)
-                flashcardcounter.configure(disabledbackground="#0072ff",
-                                        disabledforeground="white",
-                                        state="disabled",)
-                quizshow(k)
+            if k>10:
+                #Stop()
+                messagebox.showwarning('SHOW WARNING','QUESTIONS HAVE ENDED')
+            science_cell(k)
 
-
-
-        def back_q(data):
-            global y
-            global counter
-            global k
-            global count_button
-            count_button = 0
-            if k<1:
-                k==1
-            else:
-                k -= 1
-                y = (k+1,"/10")  
-                flashcardcounter.configure(disabledbackground="#0072ff",state="normal",)
-                flashcardcounter.delete(0,"end")
-                flashcardcounter.insert(0, y)
-                flashcardcounter.configure(disabledbackground="#0072ff",
-                                        disabledforeground="white",
-                                        state="disabled",)
-            quizshow(k)
-
-
-
-        def ansa():
-            global submitted
-            submitted=("a") 
-            ans_in_db()
-        def ansb():
-            global submitted
-            submitted=("b")
-            ans_in_db()
-        def ansc():
-            global submitted
-            submitted=("c")
-            ans_in_db()
-        def ansd():
-            global submitted
-            submitted=("d")
-            ans_in_db()
-
-
-
-
-        mycursor.execute('drop table student_response')
-        mycursor.execute('create table student_response(response char(20), answer char(20) not null)')
-
-        def ans_in_db():
+        #mycursor.execute('create table student_response(q_no varchar(30) primary key, response char(1), answer char(1) not null)')
+        def ans_in_db(args):
             global count_button
             count_button = count_button + 1
             if count_button > 1:
                 messagebox.showerror('SHOW ERROR', 'Answer has already been submitted.')
-            else:
-                if submitted==("a") :
-                    ansresponse = option_a
-                elif submitted==("b") :
-                    ansresponse = option_b
-                elif submitted==("c") :
-                    ansresponse = option_c
-                elif submitted==("d") :
-                    ansresponse = option_d
-                mycursor = mycon.cursor()
-                mycursor.execute('insert into student_response values("%s","%s");'%(ansresponse, correct_ans))
-                mycon.commit()
+            if args == 'A':
+                response = option_a
+            elif args == 'B':
+                response = option_b
+            elif args == 'C':
+                response = option_c
+            elif args == 'D':
+                response = option_d
+            mycursor.execute('insert into student_response values("{}","{}")'.format(response, correct_ans,))
+            mycon.commit()
 
 
 
-        def quizshow(k):      
-
+        def science_cell(k):           
+            mycursor.execute('select * from sci_cell_mcq;')
+            data = mycursor.fetchall()
             global option_a
             global option_b
             global option_c
@@ -1994,21 +1411,21 @@ def homepageaction():
                             font='BurbankBigCondensed-Bold 20',
                             bg='#B327C4',
                             fg='white',
-                            command=lambda:ansa()).place(x=125, y=470, width=457, height=75)
+                            command=lambda:ans_in_db('A')).place(x=125, y=470, width=457, height=75)
 
             option_2 = tk.Button(root,
                             text=option_b,
                             font='BurbankBigCondensed-Bold 20',
                             bg='#22C53A',
                             fg='white',
-                            command=lambda:ansb()).place(x=743, y=470, width=457, height=75)
+                            command=lambda:ans_in_db('B')).place(x=743, y=470, width=457, height=75)
 
             option_3 = tk.Button(root,
                             text=option_c,
                             font='BurbankBigCondensed-Bold 20',
                             bg='#C5AE22',
                             fg='white',
-                            command=lambda:ansc()).place(x=125, y=590, width=457, height=75)
+                            command=lambda:ans_in_db('C')).place(x=125, y=590, width=457, height=75)
 
 
             option_4 = tk.Button(root,
@@ -2016,9 +1433,13 @@ def homepageaction():
                             font='BurbankBigCondensed-Bold 20',
                             bg='#D92B2B',
                             fg='white',
-                            command=lambda:ansd()).place(x=741, y=590, width=457, height=75)
+                            command=lambda:ans_in_db('D')).place(x=741, y=590, width=457, height=75)
 
-
+            swap_1 = tk.Label(root,
+                            #text=swap,
+                            font='BurbankBigCondensed-Bold 20',
+                            bg='#3D3F41',
+                            fg='white').place(x=1127, y=2, width=150, height=70)
 
             timer_1 = tk.Button(root,
                             bg='#3D3F41',
@@ -2026,67 +1447,17 @@ def homepageaction():
                             borderwidth=0,
                             command=lambda:stopwatch().place(x=550, y=257, width=220, height=74))
             
+            next= tk.Button(root,
+                    text='NEXT',
+                    font='BurbankBigCondensed-Bold 30',
+                    bg='#3D3F41',
+                    fg='white',
+                    command=lambda:next_q(data)).place(x=127, y=2, width=150, height=70)
 
-                
-            ###################################################################
-            great_font = font.Font(size = 100)
-            great_display = tk.Button(root,
-                            text='>',
-                            font="BurbankBigCondensed-Bold 17",
-                            fg="white",
-                            bg="#0072ff",
-                            width=80,
-                            height=89,
-                            borderwidth=0,
-                            command=lambda:next_q(data))
-            great_display['font'] = great_font
-            great_display.place(x=1190, y=210, width=80, height=100)
+                           
 
-            less_font = font.Font(size = 100)
-            less_display = tk.Button(root,
-                                text='<',
-                                font="BurbankBigCondensed-Bold 17",
-                                fg="white",
-                                bg="#0072ff",
-                                width=80,
-                                height=89,
-                                borderwidth=0,
-                                command=lambda:back_q(data))
-            less_display['font'] = less_font
-            less_display.place(x=5, y=210, width=80, height=100)
-
-            def mcqquit():
-                root.destroy()
-                from homepagestarter import homepageaction
-                homepageaction()
-
-
-            button_back = tk.Button(root,
-            text='<QUIT>',
-            font='BurbankBigCondensed-Bold 35',
-            bg='#0072ff',
-            fg='white',
-            borderwidth=0,
-            command = lambda:mcqquit()).place(x=5,y=15, width=150, height=70)
-
-            def next1(e):
-                next_q(data)
-            def back1(e):
-                back_q(data)
-
-            root.bind('<Left>',back1)
-            root.bind('<Right>',next1)
-            root.mainloop()
-        quizshow(k)
-        root.mainloop()
-
-
-            ################################################################
     homeflash()
     
 
     root.mainloop()
-    ####################################################################################################
-    ####################################################################################################
-    ####################################################################################################
-        
+homepageaction()

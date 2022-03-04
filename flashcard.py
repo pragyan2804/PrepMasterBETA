@@ -165,15 +165,13 @@ def flashcardscreen():
         global x
         global y
         global counter
-        x -= 1
-        y = (x,"/10")
-        if x == 11:
-            messagebox.showinfo("SHOWINFO", "Session Complete!")
-            root.destroy()
-            from homepagestarter import homepageaction
-            homepageaction()
+
+        if x <=1:
+            x==1
 
         else:    
+            x -= 1
+            y = (x,"/10")
             flashcardcounter.configure(disabledbackground="#278835",state="normal",)
             flashcardcounter.delete(0,"end")
             flashcardcounter.insert(0, y)
@@ -242,7 +240,7 @@ def flashcardscreen():
     less_display['font'] = less_font
     less_display.place(x=5, y=332, width=80, height=100)
 
-   
+################################################################
 
     root.mainloop()
 
