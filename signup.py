@@ -22,7 +22,7 @@ def signupwindowaction():
         mycon = mysql.connect(host='localhost', user='root', passwd='pragyan123', database='prepmaster')
         mycursor = mycon.cursor()
         #try:
-        mycursor.execute('insert into account_student values("%s","%s","%s","%s","%s","%s","%s","%s","%s");'%(user_name.get(),passwd_key.get(),f_name.get(),school_db.get(),email_db.get(),0,0,0,0))
+        mycursor.execute('insert into account_student values("%s","%s","%s","%s","%s","%s","%s","%s","%s","%s");'%(user_name.get(),passwd_key.get(),f_name.get(),school_db.get(),email_db.get(),0,0,0,0,0))
         mycon.commit()
         messagebox.showinfo("SHOWINFO", "ACCOUNT CREATED!")
         signupwindow.destroy()
