@@ -1,3 +1,6 @@
+DROP DATABASE IF EXISTS prepmaster;
+create database prepmaster;
+use prepmaster;
 -- MySQL dump 10.13  Distrib 8.0.24, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: prepmaster

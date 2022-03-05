@@ -14,6 +14,8 @@ def signupwindowaction():
     signupwindow.title("PrepMasterBETA")
     signupwindow.geometry("1280x720")   
     bg = PhotoImage(file = "signup.png")
+    icon = PhotoImage(file="appicon.png")
+    signupwindow.iconphoto(False, icon)
     label2 = Label( signupwindow, image = bg)
     label2.place(x = 0, y = 0)
     signupwindow.resizable(False, False)
@@ -21,15 +23,18 @@ def signupwindowaction():
     def accountdone():
         mycon = mysql.connect(host='localhost', user='root', passwd='pragyan123', database='prepmaster')
         mycursor = mycon.cursor()
-        #try:
-        mycursor.execute('insert into account_student values("%s","%s","%s","%s","%s","%s","%s","%s","%s","%s");'%(user_name.get(),passwd_key.get(),f_name.get(),school_db.get(),email_db.get(),0,0,0,0,0))
-        mycon.commit()
-        messagebox.showinfo("SHOWINFO", "ACCOUNT CREATED!")
-        signupwindow.destroy()
-        from MasterPrepBETA import studentlogin
-        studentlogin()        
-        #except:
-            #messagebox.showerror('ERROR','RECORD INSERTION UNSUCCESSFUL!')
+        if user_name.get() == "" or passwd_key.get()=="" or f_name.get()=="" or school_db.get()=="" or email_db.get()=="":
+            messagebox.showerror('ERROR','PLEASE FILL ALL FIELDS!')
+        else:
+            try:
+                mycursor.execute('insert into account_student values("%s","%s","%s","%s","%s","%s","%s","%s","%s","%s");'%(user_name.get(),passwd_key.get(),f_name.get(),school_db.get(),email_db.get(),0,0,0,0,0))
+                mycon.commit()
+                messagebox.showinfo("SHOWINFO", "ACCOUNT CREATED!")
+                signupwindow.destroy()
+                from MasterPrepBETA import studentlogin
+                studentlogin()        
+            except:
+                messagebox.showerror('ERROR','RECORD INSERTION UNSUCCESSFUL!')
 
     def accountdone1(e):
         accountdone()
@@ -129,6 +134,19 @@ def signupwindowaction():
                     fg='white',
 				    command = lambda:accountdone()).place(x=920, y=631, width=200, height=53)
     signupwindow.bind('<Return>',accountdone1)
+
+    def backtologin():
+        signupwindow.destroy()
+        from MasterPrepBETA import studentlogin
+        studentlogin()    
+
+    button_back = tk.Button(signupwindow,
+        text='<BACK TO LOGIN>',
+        font='BurbankBigCondensed-Bold 29',
+        bg='#0072ff',
+        fg='white',
+        borderwidth=0,
+        command=lambda:backtologin()).place(x=10,y=15, width=220, height=70)
 
 
 

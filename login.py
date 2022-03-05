@@ -16,6 +16,8 @@ def studentlogin():
 		root.geometry("1280x720")
 		root.resizable(False, False)
 		bg = PhotoImage(file = "login.png")
+		icon = PhotoImage(file="appicon.png")
+		root.iconphoto(False, icon)
 		label1 = Label( root, image = bg)
 		label1.place(x = 0, y = 0)
 
@@ -48,19 +50,22 @@ def studentlogin():
 			login()
 
 		def login():
-			for i in account_student:
-				if user.get() == i[0] and passwd.get() == i[1]:
-					messagebox.showinfo('showinfo','LOGIN SUCCESSFUL!')
-					sql="update account_student set status = %s where username= %s"
-					val=(1,user.get())
-					mycursor.execute(sql, val)
-					mycon.commit()
-					root.destroy()
-					from homepagestarter import homepageaction
-					homepageaction()
-					quit()
-			else:
+			if user.get() == "" or passwd.get() == "":
 				messagebox.showerror('showinfo','INVALID USERNAME OR PASSWORD')
+			else:
+				for i in account_student:
+					if user.get() == i[0] and passwd.get() == i[1]:
+						messagebox.showinfo('showinfo','LOGIN SUCCESSFUL!')
+						sql="update account_student set status = %s where username= %s"
+						val=(1,user.get())
+						mycursor.execute(sql, val)
+						mycon.commit()
+						root.destroy()
+						from homepagestarter import homepageaction
+						homepageaction()
+						quit()
+				else:
+					messagebox.showerror('showinfo','INVALID USERNAME OR PASSWORD')
 
 
 		def signuppage():

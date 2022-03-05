@@ -22,6 +22,8 @@ def homepageaction():
     root = Tk()
     root.geometry("1280x720")
     root.title("PrepMasterBETA")
+    icon = PhotoImage(file="appicon.png")
+    root.iconphoto(False, icon)
     root.resizable(False, False)
     usernametoshow = ""
 
@@ -1103,7 +1105,7 @@ def homepageaction():
                         fg='white').place(x=830, y=220, width=263, height=200)
 
         button_4 = tk.Button(root,
-                        text='Sqaure And Square Roots',
+                        text='Square And Square Roots',
                         font='BurbankBigCondensed-Bold 30',
                         wraplength=150,
                         bg='#F30C0D',
@@ -1844,7 +1846,7 @@ def homepageaction():
             messagebox.showinfo('RESULT', endresult)
 
             global compresult
-            compresult = (marks_obtained/(timerq/60))
+            compresult = round((marks_obtained/(timerq/60)),1)
 
 
             if iscomp==1 and mcqsesh==1:
