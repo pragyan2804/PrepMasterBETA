@@ -16,6 +16,10 @@ THE MAIN LOCAL DATABASE EXISTS IN "DBsource/prepmaster_masterDBfile.sql".
 
 
 
+"BurbankBigCondensed-Bold.otf" FONT FILE TO BE INSTALLED BEFORE FIRST RUN.
+
+
+
 RUN MasterPrepBETA.py TO START THE APP.
 ## 🔵 PREVIEW BUILD FEATURES
 
