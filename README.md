@@ -6,7 +6,7 @@
 To learn, revise and practise all your academics.
 
 
-## INSTALLATION
+## 🔵 INSTALLATION
 
 ADDITIONAL PRE-REQUISITES INCLUDE PILLOW MODULE & MYSQL-PYTHON CONNECTOR (INCLUDED IN "PreReq/installer.bat" FOR WINDOWS)
 
