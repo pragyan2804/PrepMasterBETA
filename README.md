@@ -6,7 +6,7 @@
 To learn, revise and practise all your academics.
 
 
-## 🔵 INSTALLATION
+## 🛠️ INSTALLATION
 
 ADDITIONAL PRE-REQUISITES INCLUDE PILLOW MODULE & MYSQL-PYTHON CONNECTOR (INCLUDED IN "PreReq/installer.bat" FOR WINDOWS)
 
@@ -21,7 +21,7 @@ THE MAIN LOCAL DATABASE EXISTS IN "DBsource/prepmaster_masterDBfile.sql".
 
 
 RUN MasterPrepBETA.py TO START THE APP.
-## 🔵 PREVIEW BUILD FEATURES
+## [ℹ️] PREVIEW BUILD FEATURES
 
 PrepMaster!™ - The Learning App OFFERS A WIDE VARIETY OF FEATURES FOR ALL OF STUDENTS NEEDS INCLUDING-
 
